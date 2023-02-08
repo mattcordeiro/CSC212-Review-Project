@@ -11,6 +11,7 @@ class gradebook {
     std::vector<int> labs;
     std::vector<int> assignments;
     std::vector<int> projects;
+    std::vector<int> exams;
 private:
     //things that will be accessed explicitly
 public:
