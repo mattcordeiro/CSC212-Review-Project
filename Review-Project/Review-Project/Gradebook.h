@@ -8,6 +8,8 @@ private:
 	std::vector<Catagory> catagories;
 public:
 	Gradebook(std::string name);
+	std::string GetName();
+	std::vector<Catagory> GetCatagory();
 	void AddCatagory(Catagory catagory);
 	std::string to_string();
 };

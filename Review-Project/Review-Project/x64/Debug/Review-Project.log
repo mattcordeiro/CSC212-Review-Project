@@ -1,7 +1,5 @@
-﻿  Assignment.cpp
-C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\Review-Project\Assignment.cpp(27,21): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-  Catagory.cpp
-  Gradebook.cpp
+﻿  Gradebook.cpp
   main.cpp
+C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(26,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Generating Code...
   Review-Project.vcxproj -> C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\x64\Debug\Review-Project.exe
