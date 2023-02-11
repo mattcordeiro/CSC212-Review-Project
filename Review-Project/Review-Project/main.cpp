@@ -2,12 +2,15 @@
 #include "Gradebook.h"
 #include <fstream>
 
+// Builds data file for gradebook
 void SaveGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initializer) {
-	bool found = false;
+	bool found = false; //used to check if gradebook exists in init_load.txt
 	std::ofstream out_file;
-	out_file.open(a_gradebook->GetName() + ".txt");
+	out_file.open(a_gradebook->GetName() + ".txt"); // opens txt file with gradebook name
+
 	out_file << a_gradebook->GetName() + "\n";
 
+	//cycle through each catagory and adds its fields and its assignments fields to the data file
 	for(int i = 0; i < a_gradebook->GetCatagory().size();i++) {
 		out_file << a_gradebook->GetCatagory()[i].GetName() + " " + std::to_string(a_gradebook->GetCatagory()[i].GetWeight()) + "\n";
 		out_file << a_gradebook->GetCatagory()[i].GetAssignment().size() + "\n";
@@ -18,12 +21,14 @@ void SaveGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initial
 	}
 	out_file.close();
 
+	// Checks if current gradebook exists in init_load.txt
 	for (int i = 0; i < load_initializer.size(); i++) {
 		if (load_initializer[i].compare(a_gradebook->GetName()) == 0) {
 			found = true;
 		}
 	}
 
+	// adds gradebook to init_load.txt if not found
 	if (!found) {
 		out_file.open("init_load.txt", std::ofstream::trunc);
 		
@@ -62,7 +67,7 @@ void ManageGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initi
 			}
 			else std::cout << "Invalid Option.\n";
 			break;
-			//assignment creation
+			//assignment creation - not finished/implemented
 		case 2:
 			if (a_gradebook->GetCatagory().size() > 0) {
 				std::cout << "Choose catagory for assignment:\n";
@@ -72,7 +77,7 @@ void ManageGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initi
 			}
 			else std::cout << "No catagories to add an assignment to.";
 			break;
-			//Display grades
+			//Display grades - not finished/implemented
 		case 3:
 			break;
 			//exit gradebook
@@ -85,6 +90,7 @@ void ManageGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initi
 
 }
 
+//builds gradebook from data file
 void LoadGradebook(Gradebook*& a_gradebook, std::string load_file, std::vector<std::string> load_initializer) {
 	std::ifstream in_file;
 	std::string gb_name;
@@ -93,17 +99,23 @@ void LoadGradebook(Gradebook*& a_gradebook, std::string load_file, std::vector<s
 	int num_assignments;
 	int max_score;
 	int score;
-	int cat_count = 0;
+	int cat_count = 0; //used to track which catagory to add assignments to
 	float weight;
 
 	in_file.open(load_file + ".txt");
 	in_file >> gb_name;
 	a_gradebook = new Gradebook(gb_name);
+	//cycle through gradebook data file
 	while (in_file.peek() != EOF) {
+		//pull catagory name, weight and number of assignments from data file
 		in_file >> cat_name;
-		in_file >> weight;
-		a_gradebook->AddCatagory(Catagory(cat_name, weight));
+		in_file >> weight;		
 		in_file >> num_assignments;
+
+		//creates Catagory
+		a_gradebook->AddCatagory(Catagory(cat_name, weight)); 
+
+		//cycle through assignments adding them to the Catagory
 		for (int i = 0; i < num_assignments; i++) {
 			in_file >> ass_name;
 			in_file >> max_score;
@@ -112,8 +124,9 @@ void LoadGradebook(Gradebook*& a_gradebook, std::string load_file, std::vector<s
 		}
 		cat_count++;
 	}
+
+	// passes gradebook to the manager after loading
 	ManageGradebook(a_gradebook, load_initializer);
-	//return *a_gradebook;
 }
 
 int main(int argc, char* argv[]) {
