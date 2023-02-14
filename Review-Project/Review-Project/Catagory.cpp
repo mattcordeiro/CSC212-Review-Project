@@ -8,6 +8,10 @@ Catagory::Catagory(std::string name, float weight) {
 	this->name = name;
 	this->weight = weight;
 }
+void Catagory::SetName(std::string name)
+{
+	this->name = name;
+}
 std::string Catagory::GetName() {
 	return this->name;
 }

@@ -11,6 +11,7 @@ private:
 public:
 	Catagory(std::string name);
 	Catagory(std::string name, float weight);
+	void SetName(std::string name);
 	std::string GetName();
 	double GetWeight();
 	void SetWeight(float weight);

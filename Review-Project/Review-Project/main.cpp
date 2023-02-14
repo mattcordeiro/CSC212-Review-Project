@@ -45,6 +45,46 @@ void SaveGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initial
 
 }
 
+Catagory EditCatagory(Catagory category) {
+	int input;
+	std::string s_input;
+	std::cout << "What would you like to edit(1 - Category name, 2 - Category weight): ";
+	std::cin >> input;
+	if (input == 1) {
+		std::cout << "Enter new name: ";
+		std::cin >> s_input;
+		category.SetName(s_input);
+	}
+	else if (input == 2) {
+
+	}
+	return category;
+}
+
+int ChooseCategory(Gradebook*& a_gradebook) {
+	int input;
+	if (a_gradebook->GetCatagory().size() > 0) {
+		std::cout << "Choose catagory:\n";
+		for (int i = 1; i <= a_gradebook->GetCatagory().size(); i++) {
+			std::cout << i << " - " << a_gradebook->GetCatagory()[i - 1].GetName() << "\n";
+		}
+	}
+	else std::cout << "No catagories available.\n";
+	std::cout << a_gradebook->GetCatagory().size() + 1 << " - back\n";
+	std::cin >> input;
+	return (input - 1);
+}
+
+int ChooseAssignment(Catagory category) {
+	int input;
+
+	return input;
+}
+
+Catagory EditAssignment(int ass_idx, Catagory category) {
+
+}
+
 Catagory BuildCatagoryAssignment(Catagory catagory, std::string ass_name, int max_score, int score = 0) {
 	Assignment assingment(ass_name, max_score, score);
 	catagory.AddAssignment(assingment);
@@ -63,37 +103,41 @@ void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_init
 
 	while (!back) {
 		std::cout << "What would you like to do with gradebook: " << a_gradebook->GetName() << ":\n";
-		std::cout << "1 - Add Catagory\n"<< "2 - Add Assignment\n" << "3 - Show Grades\n" << "4 - Back\n";
+		std::cout << "1 - Manage Categories\n"<< "2 - Add Assignment\n" << "3 - Show Grades\n" << "4 - Back\n";
 		std::cin >> input;
 		
 		switch (input) {
-		//catagory creation
+		//catagory management
 		case 1:
-			std::cout << "Catagory name: ";
-			std::cin >> s_input;
-			std::cout << "Would you like to set the weight of " << s_input << " (1 - yes, 2 - no)? ";
+			std::cout << "What would you like to do with the categories:\n1 - Add Category\n 2 - Edit category\n 3 - Delete Catagory\n";
 			std::cin >> input;
-			if (input == 2) a_gradebook->AddCatagory(Catagory(s_input));
-			else if (input == 1) {
-				std::cout << "Enter weight(decimal format): ";
-				std::cin >> f_input;
-				a_gradebook->AddCatagory(Catagory(s_input, f_input));
+			switch (input) {
+			//Category creation
+			case 1:
+				std::cout << "Catagory name: ";
+				std::cin >> s_input;
+				std::cout << "Would you like to set the weight of " << s_input << " (1 - yes, 2 - no)? ";
+				std::cin >> input;
+				if (input == 2) a_gradebook->AddCatagory(Catagory(s_input));
+				else if (input == 1) {
+					std::cout << "Enter weight(decimal format): ";
+					std::cin >> f_input;
+					a_gradebook->AddCatagory(Catagory(s_input, f_input));
+				}
+				else std::cout << "Invalid Option.\n";
+				break;
+			case 2:
+				input = ChooseCategory(a_gradebook);
+				a_gradebook->SetCatagory(input, EditCatagory(a_gradebook->GetCatagory()[input]));
+				break;
+			case 3:
+				break;
 			}
-			else std::cout << "Invalid Option.\n";
 			break;
 
 		//assignment creation - not finished/implemented
 		case 2:
-			//lists Catagories
-			if (a_gradebook->GetCatagory().size() > 0) {
-				std::cout << "Choose catagory for assignment:\n";
-				for (int i = 1; i <= a_gradebook->GetCatagory().size(); i++) {
-					std::cout << i << " - " << a_gradebook->GetCatagory()[i-1].GetName() << "\n";
-				}
-			}
-			else std::cout << "No catagories to add an assignment to.\n";
-			std::cout << a_gradebook->GetCatagory().size() + 1 << " - back\n";
-			std::cin >> input;
+			input = ChooseCategory(a_gradebook);
 
 			if (input > 0 && input < (a_gradebook->GetCatagory().size() + 1)) {
 
@@ -103,7 +147,7 @@ void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_init
 				std::cout << "\nMax score: ";
 				std::cin >> max_score;
 
-				a_gradebook->SetCatagory(input - 1, BuildCatagoryAssignment(a_gradebook->GetCatagory()[input - 1], s_input, max_score)) ;
+				a_gradebook->SetCatagory(input, BuildCatagoryAssignment(a_gradebook->GetCatagory()[input], s_input, max_score)) ;
 
 			}
 			break;
