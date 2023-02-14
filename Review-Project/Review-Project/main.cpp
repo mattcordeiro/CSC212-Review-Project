@@ -167,7 +167,6 @@ void LoadGradebook(Gradebook*& a_gradebook, std::string load_file, std::vector<s
 
 int main(int argc, char* argv[]) {
 	int input;
-	int init_count = 0;
 	int menu_count = 0;
 	std::string s_input;
 	std::string s_tmp;
@@ -177,23 +176,24 @@ int main(int argc, char* argv[]) {
 	std::vector<std::string> load_initializer;
 	std::ifstream in_file;
 
-	if (argc == 1) in_file.open(load_file);
-	else if (argc == 2) in_file.open(argv[1]);
-	else {
-		quit = true;
-		std::cout << "Invalid Argument";
-	}
-
-	load_initializer.clear();
-	while (in_file.peek() != EOF && !quit) {
-		in_file >> s_tmp;
-		load_initializer.push_back(s_tmp);
-		init_count++;
-	}
-	in_file.close();
-
-
 	while (!quit) {
+
+		//opens txt file with list of saved gradebooks
+		if (argc == 1) in_file.open(load_file);
+		else if (argc == 2) in_file.open(argv[1]);
+		else {
+			quit = true;
+			std::cout << "Invalid Argument";
+		}
+
+		//builds lists of saved gradebooks in a vector<string> call load_initializer
+		load_initializer.clear();
+		while (in_file.peek() != EOF && !quit) {
+			in_file >> s_tmp;
+			load_initializer.push_back(s_tmp);
+		}
+		in_file.close();
+
 		std::cout << "***********\n" << "*Gradebook*\n" << "***********\n";
 		std::cout << "1 - New Gradebook\n" << "2 - Load Gradebook\n" << "3 - Import Gradebook\n" << "4 - Quit\n";
 
@@ -210,23 +210,6 @@ int main(int argc, char* argv[]) {
 
 			//load gradebook
 		case 2:
-			//opens txt file with list of saved gradebooks
-			if (argc == 1) in_file.open(load_file);
-			else if (argc == 2) in_file.open(argv[1]);
-			else {
-				quit = true;
-				std::cout << "Invalid Argument";
-			}
-
-			//builds lists of saved gradebooks in a vector<string> call load_initializer
-			load_initializer.clear();
-			while (in_file.peek() != EOF && !quit) {
-				in_file >> s_tmp;
-				load_initializer.push_back(s_tmp);
-				init_count++;
-			}
-			in_file.close();
-
 			//loops through load_initializer printing out choices of gradebooks available to load
 			std::cout << "Which Gradebook would you like to load:\n";
 			menu_count=0;
