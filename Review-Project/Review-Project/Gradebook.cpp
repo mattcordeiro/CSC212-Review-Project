@@ -5,6 +5,8 @@ Gradebook::Gradebook(std::string name) {
 }
 std::string Gradebook::GetName() {
 	return this->name;
+}void Gradebook::SetCatagory(int idx, Catagory catagory) {
+	this->catagories[idx] = catagory;
 }
 std::vector<Catagory> Gradebook::GetCatagory() {
 	return this->catagories;

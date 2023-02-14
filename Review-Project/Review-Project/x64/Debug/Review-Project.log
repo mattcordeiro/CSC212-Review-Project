@@ -1,3 +1,8 @@
-﻿  main.cpp
-C:\Users\drjac\source\repos\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(64,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+﻿  Gradebook.cpp
+  main.cpp
+C:\Users\drjac\source\repos\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(77,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\drjac\source\repos\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(105,9): warning C4804: '>': unsafe use of type 'bool' in operation
+C:\Users\drjac\source\repos\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(107,9): warning C4804: '>': unsafe use of type 'bool' in operation
+C:\Users\drjac\source\repos\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(53,13): warning C4101: 'input2': unreferenced local variable
+  Generating Code...
   Review-Project.vcxproj -> C:\Users\drjac\source\repos\CSC212-Review-Project\Review-Project\x64\Debug\Review-Project.exe

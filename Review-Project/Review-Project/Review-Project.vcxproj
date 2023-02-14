@@ -131,12 +131,18 @@
     <ClInclude Include="Catagory.h" />
     <ClInclude Include="Gradebook.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="main2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assignment.cpp" />
     <ClCompile Include="Catagory.cpp" />
     <ClCompile Include="Gradebook.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="main2.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

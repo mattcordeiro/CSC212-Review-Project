@@ -6,7 +6,7 @@
 void SaveGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initializer) {
 	bool found = false; //used to check if gradebook exists in init_load.txt
 	std::ofstream out_file;
-	out_file.open(a_gradebook->GetName() + ".txt"); // opens txt file with gradebook name
+	out_file.open(a_gradebook->GetName() + ".txt", std::ofstream::trunc); // opens txt file with gradebook name
 
 	out_file << a_gradebook->GetName() + "\n";
 
@@ -14,6 +14,7 @@ void SaveGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initial
 	for(int i = 0; i < a_gradebook->GetCatagory().size();i++) {
 		out_file << a_gradebook->GetCatagory()[i].GetName() + " " + std::to_string(a_gradebook->GetCatagory()[i].GetWeight()) + "\n";
 		out_file << a_gradebook->GetCatagory()[i].GetAssignment().size() + "\n";
+		std::cout << a_gradebook->GetCatagory()[i].GetAssignment().size() + "\n";
 		for (int j = 0; j < a_gradebook->GetCatagory()[i].GetAssignment().size(); j++) {
 			out_file << a_gradebook->GetCatagory()[i].GetAssignment()[j].GetName() + " " + std::to_string(a_gradebook->GetCatagory()[i].GetAssignment()[j].GetMaxScore())
 				+ " " + std::to_string(a_gradebook->GetCatagory()[i].GetAssignment()[j].GetScore()) + "\n";
@@ -41,11 +42,21 @@ void SaveGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initial
 
 }
 
-void ManageGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initializer) {
-	int input;
+Catagory BuildCatagoryAssignment(Catagory catagory, std::string ass_name, int max_score, int score = 0) {
+	Assignment assingment(ass_name, max_score, score);
+	catagory.AddAssignment(assingment);
+	if (!(catagory.GetAssignment().size() > 0))std::cout << "BCA not working, size i: " << catagory.GetAssignment().size() << std::endl;
+	return catagory;
+}
+
+void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_initializer) {
+	int input, input2;
+	int max_score;
 	std::string s_input;
 	bool back = false;
 	double f_input;
+	
+	
 
 	while (!back) {
 		std::cout << "What would you like to do with gradebook: " << a_gradebook->GetName() << ":\n";
@@ -53,7 +64,7 @@ void ManageGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initi
 		std::cin >> input;
 		
 		switch (input) {
-			//catagory creation
+		//catagory creation
 		case 1:
 			std::cout << "Catagory name: ";
 			std::cin >> s_input;
@@ -67,20 +78,44 @@ void ManageGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initi
 			}
 			else std::cout << "Invalid Option.\n";
 			break;
-			//assignment creation - not finished/implemented
+
+		//assignment creation - not finished/implemented
 		case 2:
+			//lists Catagories
 			if (a_gradebook->GetCatagory().size() > 0) {
 				std::cout << "Choose catagory for assignment:\n";
 				for (int i = 1; i <= a_gradebook->GetCatagory().size(); i++) {
 					std::cout << i << " - " << a_gradebook->GetCatagory()[i-1].GetName() << "\n";
 				}
 			}
-			else std::cout << "No catagories to add an assignment to.";
+			else std::cout << "No catagories to add an assignment to.\n";
+			std::cout << std::to_string(a_gradebook->GetCatagory().size()) << "\n";
+			std::cin >> input;
+
+			if (input > 0 && input < (a_gradebook->GetCatagory().size() + 1)) {
+
+				std::cout << "Assignment title: ";
+				std::cin >> s_input;
+
+				std::cout << "\nMax score: ";
+				std::cin >> max_score;
+
+
+				Catagory t_catagory = BuildCatagoryAssignment(a_gradebook->GetCatagory()[input - 1], s_input, max_score);
+				if (!(t_catagory.GetAssignment().size()) > 0)std::cout << "#1 - Assingment creation failed, size i: " << a_gradebook->GetCatagory()[input - 1].GetAssignment().size() << std::endl;
+				a_gradebook->SetCatagory(input - 1, t_catagory) ;
+				if (!(a_gradebook->GetCatagory()[input - 1].GetAssignment().size()) > 0)std::cout << "#2 - Assingment creation failed, size i: " << a_gradebook->GetCatagory()[input - 1].GetAssignment().size() << std::endl;
+			}
 			break;
-			//Display grades - not finished/implemented
+		//Display grades - not finished/implemented
 		case 3:
+			for (int i = 0; i < a_gradebook->GetCatagory().size(); i++) {
+				for (int j = 0; j < a_gradebook->GetCatagory()[i].GetAssignment().size(); j++) {
+					std::cout << a_gradebook->GetCatagory()[i].GetAssignment()[j].to_string();
+				}
+			}
 			break;
-			//exit gradebook
+		//exit gradebook
 		case 4:
 			SaveGradebook(a_gradebook, load_initializer);
 			back = true;
@@ -164,13 +199,17 @@ int main(int argc, char* argv[]) {
 		std::cin >> input;
 
 		switch (input) {
+			//initializes new gradebook and passes it to the gradebook manager
 		case 1:
 			std::cout << "Name of new gradebook's course\n";
 			std::cin >> s_input;
 			a_gradebook = new Gradebook(s_input);
 			ManageGradebook(a_gradebook, load_initializer);
 			break;
+
+			//load gradebook
 		case 2:
+			//opens txt file with list of saved gradebooks
 			if (argc == 1) in_file.open(load_file);
 			else if (argc == 2) in_file.open(argv[1]);
 			else {
@@ -178,6 +217,7 @@ int main(int argc, char* argv[]) {
 				std::cout << "Invalid Argument";
 			}
 
+			//builds lists of saved gradebooks in a vector<string> call load_initializer
 			load_initializer.clear();
 			while (in_file.peek() != EOF && !quit) {
 				in_file >> s_tmp;
@@ -186,6 +226,7 @@ int main(int argc, char* argv[]) {
 			}
 			in_file.close();
 
+			//loops through load_initializer printing out choices of gradebooks available to load
 			std::cout << "Which Gradebook would you like to load:\n";
 			menu_count=0;
 			for (int i = 0; i < load_initializer.size(); i++) {
@@ -195,10 +236,15 @@ int main(int argc, char* argv[]) {
 			std::cout << menu_count + 1 << " - Back\n";
 			std::cin >> input;
 
+			//if choice is within range call LoadGradeook() 
 			if (input > 0 && input < menu_count + 1 ) LoadGradebook(a_gradebook, load_initializer[input - 1], load_initializer);
 			break;
+
+			//import - TODO: Import gradebook from a formatted txt file - be sure to check for duplication in init_load.txt and adjust init_load.txt
 		case 3:
 			break;
+
+			//breaks loop and exits app
 		case 4:
 			quit = true;
 			break;

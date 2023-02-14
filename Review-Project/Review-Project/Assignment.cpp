@@ -1,15 +1,21 @@
 #include "Assignment.h"
 
+Assignment::Assignment() {
+	this->name = "";
+	this->max_score = 0;
+	this->score = 0;
+}
+
 Assignment::Assignment(std::string name) {
 	this->name = name;
-	this->max_score = NULL;
-	this->score = NULL;
+	this->max_score = 0;
+	this->score = 0;
 }
 
 Assignment::Assignment(std::string name, int max_score) {
 	this->name = name;
 	this->max_score = max_score;
-	this->score = NULL;
+	this->score = 0;
 }
 
 Assignment::Assignment(std::string name, int max_score, int score) {

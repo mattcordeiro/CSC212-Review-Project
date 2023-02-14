@@ -8,6 +8,7 @@ private:
 	int max_score;
 	int score;
 public:
+	Assignment();
 	Assignment(std::string name);
 	Assignment(std::string name, int max_score);
 	Assignment(std::string name, int max_score, int score);

@@ -2,7 +2,7 @@
 
 Catagory::Catagory(std::string name) {
 	this->name = name;
-	this->weight = NULL;
+	this->weight = 0;
 }
 Catagory::Catagory(std::string name, float weight) {
 	this->name = name;
@@ -27,7 +27,7 @@ void Catagory::AddAssignment(Assignment assingment) {
 
 std::string Catagory::to_string() {
 	std::string str = "";
-
+	str += this->name + " Has " + std::to_string(this->assignments.size()) + " Assingments";
 
 	return str;
 }
