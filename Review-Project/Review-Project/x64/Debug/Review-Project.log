@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(80,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(56,13): warning C4101: 'input2': unreferenced local variable
+  Review-Project.vcxproj -> C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\x64\Debug\Review-Project.exe
