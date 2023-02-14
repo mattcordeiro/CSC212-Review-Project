@@ -27,7 +27,7 @@ void Catagory::AddAssignment(Assignment assingment) {
 
 std::string Catagory::to_string() {
 	std::string str = "";
-	str += this->name + " Has " + std::to_string(this->assignments.size()) + " Assingments";
+	str += this->name + " Has " + std::to_string(this->assignments.size()) + " Assingments\n";
 
 	return str;
 }

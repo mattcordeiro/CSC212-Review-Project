@@ -5,19 +5,22 @@
 // Builds data file for gradebook
 void SaveGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initializer) {
 	bool found = false; //used to check if gradebook exists in init_load.txt
+	Catagory t_catagory = Catagory(" ");
 	std::ofstream out_file;
 	out_file.open(a_gradebook->GetName() + ".txt", std::ofstream::trunc); // opens txt file with gradebook name
 
-	out_file << a_gradebook->GetName() + "\n";
+	out_file << a_gradebook->GetName();
 
 	//cycle through each catagory and adds its fields and its assignments fields to the data file
 	for(int i = 0; i < a_gradebook->GetCatagory().size();i++) {
-		out_file << a_gradebook->GetCatagory()[i].GetName() + " " + std::to_string(a_gradebook->GetCatagory()[i].GetWeight()) + "\n";
-		out_file << a_gradebook->GetCatagory()[i].GetAssignment().size() + "\n";
-		std::cout << a_gradebook->GetCatagory()[i].GetAssignment().size() + "\n";
-		for (int j = 0; j < a_gradebook->GetCatagory()[i].GetAssignment().size(); j++) {
-			out_file << a_gradebook->GetCatagory()[i].GetAssignment()[j].GetName() + " " + std::to_string(a_gradebook->GetCatagory()[i].GetAssignment()[j].GetMaxScore())
-				+ " " + std::to_string(a_gradebook->GetCatagory()[i].GetAssignment()[j].GetScore()) + "\n";
+		out_file << "\n" << a_gradebook->GetCatagory()[i].GetName() + " " + std::to_string(a_gradebook->GetCatagory()[i].GetWeight());
+		//out_file << a_gradebook->GetCatagory()[i].GetAssignment().size() + "\n";
+		t_catagory = a_gradebook->GetCatagory()[i];
+		out_file << "\n" << std::to_string(t_catagory.GetAssignment().size()) ;
+				
+		for (int j = 0; j < t_catagory.GetAssignment().size(); j++) {
+			out_file <<  "\n" << a_gradebook->GetCatagory()[i].GetAssignment()[j].GetName() + " " + std::to_string(a_gradebook->GetCatagory()[i].GetAssignment()[j].GetMaxScore())
+				+ " " + std::to_string(a_gradebook->GetCatagory()[i].GetAssignment()[j].GetScore());
 		}
 	}
 	out_file.close();
@@ -89,7 +92,7 @@ void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_init
 				}
 			}
 			else std::cout << "No catagories to add an assignment to.\n";
-			std::cout << std::to_string(a_gradebook->GetCatagory().size()) << "\n";
+			std::cout << a_gradebook->GetCatagory().size() + 1 << " - back\n";
 			std::cin >> input;
 
 			if (input > 0 && input < (a_gradebook->GetCatagory().size() + 1)) {
@@ -100,16 +103,14 @@ void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_init
 				std::cout << "\nMax score: ";
 				std::cin >> max_score;
 
+				a_gradebook->SetCatagory(input - 1, BuildCatagoryAssignment(a_gradebook->GetCatagory()[input - 1], s_input, max_score)) ;
 
-				Catagory t_catagory = BuildCatagoryAssignment(a_gradebook->GetCatagory()[input - 1], s_input, max_score);
-				if (!(t_catagory.GetAssignment().size()) > 0)std::cout << "#1 - Assingment creation failed, size i: " << a_gradebook->GetCatagory()[input - 1].GetAssignment().size() << std::endl;
-				a_gradebook->SetCatagory(input - 1, t_catagory) ;
-				if (!(a_gradebook->GetCatagory()[input - 1].GetAssignment().size()) > 0)std::cout << "#2 - Assingment creation failed, size i: " << a_gradebook->GetCatagory()[input - 1].GetAssignment().size() << std::endl;
 			}
 			break;
 		//Display grades - not finished/implemented
 		case 3:
 			for (int i = 0; i < a_gradebook->GetCatagory().size(); i++) {
+				std::cout << "******************************\n" << a_gradebook->GetCatagory()[i].to_string() << "******************************\n";
 				for (int j = 0; j < a_gradebook->GetCatagory()[i].GetAssignment().size(); j++) {
 					std::cout << a_gradebook->GetCatagory()[i].GetAssignment()[j].to_string();
 				}
@@ -155,7 +156,7 @@ void LoadGradebook(Gradebook*& a_gradebook, std::string load_file, std::vector<s
 			in_file >> ass_name;
 			in_file >> max_score;
 			in_file >> score;
-			a_gradebook->GetCatagory()[cat_count].AddAssignment(Assignment(ass_name, max_score, score));
+			a_gradebook->SetCatagory(cat_count, BuildCatagoryAssignment(a_gradebook->GetCatagory()[cat_count], ass_name, max_score, score));
 		}
 		cat_count++;
 	}

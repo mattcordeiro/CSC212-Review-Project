@@ -1,3 +1,8 @@
 csc212
 Labs 0.000000
+2
 lab1 20 0
+lab2 20 0
+Assignments 0.000000
+1
+A2 50 0
