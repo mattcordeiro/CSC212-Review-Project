@@ -64,7 +64,7 @@ Catagory EditCatagory(Catagory category) {
 int ChooseCategory(Gradebook*& a_gradebook) {
 	int input;
 	if (a_gradebook->GetCatagory().size() > 0) {
-		std::cout << "Choose catagory:\n";
+		std::cout << "Choose a catagory:\n";
 		for (int i = 1; i <= a_gradebook->GetCatagory().size(); i++) {
 			std::cout << i << " - " << a_gradebook->GetCatagory()[i - 1].GetName() << "\n";
 		}
@@ -77,12 +77,21 @@ int ChooseCategory(Gradebook*& a_gradebook) {
 
 int ChooseAssignment(Catagory category) {
 	int input;
-
-	return input;
+	if (category.GetAssignment().size() > 0) {
+		std::cout << "Choose assignment:\n";
+		for (int i = 1; i <= category.GetAssignment().size(); i++) {
+			std::cout << i << " - " << category.GetAssignment()[i - 1].GetName() << "\n";
+		}
+	}
+	else std::cout << "No assignments available.\n";
+	std::cout << category.GetAssignment().size() + 1 << " - back\n";
+	std::cin >> input;
+	return input - 1;
 }
 
 Catagory EditAssignment(int ass_idx, Catagory category) {
 
+	return category;
 }
 
 Catagory BuildCatagoryAssignment(Catagory catagory, std::string ass_name, int max_score, int score = 0) {
@@ -103,7 +112,7 @@ void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_init
 
 	while (!back) {
 		std::cout << "What would you like to do with gradebook: " << a_gradebook->GetName() << ":\n";
-		std::cout << "1 - Manage Categories\n"<< "2 - Add Assignment\n" << "3 - Show Grades\n" << "4 - Back\n";
+		std::cout << "1 - Manage Categories\n"<< "2 - Manage Assignment\n" << "3 - Show Grades\n" << "4 - Back\n";
 		std::cin >> input;
 		
 		switch (input) {
@@ -139,17 +148,33 @@ void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_init
 		case 2:
 			input = ChooseCategory(a_gradebook);
 
-			if (input > 0 && input < (a_gradebook->GetCatagory().size() + 1)) {
+			std::cout << "What would you like to do with "<< a_gradebook->GetCatagory()[input].GetName() << " Assingments:\n1 - Add Assignment\n 2 - Edit Assignment\n 3 - Delete Assignment\n";
+			std::cin >> input2;
 
-				std::cout << "Assignment title: ";
-				std::cin >> s_input;
+			switch (input2) {
+			case 1:
+				
 
-				std::cout << "\nMax score: ";
-				std::cin >> max_score;
+				if (input > 0 && input < (a_gradebook->GetCatagory().size() )) {
 
-				a_gradebook->SetCatagory(input, BuildCatagoryAssignment(a_gradebook->GetCatagory()[input], s_input, max_score)) ;
+					std::cout << "Assignment title: ";
+					std::cin >> s_input;
 
-			}
+					std::cout << "\nMax score: ";
+					std::cin >> max_score;
+
+					a_gradebook->SetCatagory(input, BuildCatagoryAssignment(a_gradebook->GetCatagory()[input], s_input, max_score));
+
+				}
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+
+
+				}
+			
 			break;
 		//Display grades - not finished/implemented
 		case 3:
