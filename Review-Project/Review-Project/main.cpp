@@ -3,31 +3,31 @@
 #include <fstream>
 
 // Builds data file for gradebook
-void SaveGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initializer) {
+void SaveGradebook(Gradebook & a_gradebook, std::vector<std::string> load_initializer) {
 	bool found = false; //used to check if gradebook exists in init_load.txt
 	Catagory t_catagory = Catagory(" ");
 	std::ofstream out_file;
-	out_file.open(a_gradebook->GetName() + ".txt", std::ofstream::trunc); // opens txt file with gradebook name
+	out_file.open(a_gradebook.GetName() + ".txt", std::ofstream::trunc); // opens txt file with gradebook name
 
-	out_file << a_gradebook->GetName();
+	out_file << a_gradebook.GetName();
 
 	//cycle through each catagory and adds its fields and its assignments fields to the data file
-	for(int i = 0; i < a_gradebook->GetCatagory().size();i++) {
-		out_file << "\n" << a_gradebook->GetCatagory()[i].GetName() + " " + std::to_string(a_gradebook->GetCatagory()[i].GetWeight());
+	for(int i = 0; i < a_gradebook.GetCatagory().size();i++) {
+		out_file << "\n" << a_gradebook.GetCatagory()[i].GetName() + " " + std::to_string(a_gradebook.GetCatagory()[i].GetWeight());
 		//out_file << a_gradebook->GetCatagory()[i].GetAssignment().size() + "\n";
-		t_catagory = a_gradebook->GetCatagory()[i];
+		t_catagory = a_gradebook.GetCatagory()[i];
 		out_file << "\n" << std::to_string(t_catagory.GetAssignment().size()) ;
 				
 		for (int j = 0; j < t_catagory.GetAssignment().size(); j++) {
-			out_file <<  "\n" << a_gradebook->GetCatagory()[i].GetAssignment()[j].GetName() + " " + std::to_string(a_gradebook->GetCatagory()[i].GetAssignment()[j].GetMaxScore())
-				+ " " + std::to_string(a_gradebook->GetCatagory()[i].GetAssignment()[j].GetScore());
+			out_file <<  "\n" << a_gradebook.GetCatagory()[i].GetAssignment()[j].GetName() + " " + std::to_string(a_gradebook.GetCatagory()[i].GetAssignment()[j].GetMaxScore())
+				+ " " + std::to_string(a_gradebook.GetCatagory()[i].GetAssignment()[j].GetScore());
 		}
 	}
 	out_file.close();
 
 	// Checks if current gradebook exists in init_load.txt
 	for (int i = 0; i < load_initializer.size(); i++) {
-		if (load_initializer[i].compare(a_gradebook->GetName()) == 0) {
+		if (load_initializer[i].compare(a_gradebook.GetName()) == 0) {
 			found = true;
 		}
 	}
@@ -39,7 +39,7 @@ void SaveGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initial
 		for (int i = 0; i < load_initializer.size(); i++) {
 			out_file << load_initializer[i] + "\n";
 		}
-		out_file << a_gradebook->GetName();
+		out_file << a_gradebook.GetName();
 		out_file.close();
 	}
 
@@ -47,31 +47,38 @@ void SaveGradebook(Gradebook* a_gradebook, std::vector<std::string> load_initial
 
 Catagory EditCatagory(Catagory category) {
 	int input;
-	std::string s_input;
+	std::string name;
+	double weight;
 	std::cout << "What would you like to edit(1 - Category name, 2 - Category weight): ";
 	std::cin >> input;
 	if (input == 1) {
 		std::cout << "Enter new name: ";
-		std::cin >> s_input;
-		category.SetName(s_input);
+		std::cin >> name;
+		category.SetName(name);
 	}
 	else if (input == 2) {
-
+		std::cout << "Enter new weight: ";
+		std::cin >> weight;
+		category.SetWeight(weight);
 	}
 	return category;
 }
 
-int ChooseCategory(Gradebook*& a_gradebook) {
+int ChooseCategory(Gradebook & a_gradebook) {
 	int input;
-	if (a_gradebook->GetCatagory().size() > 0) {
+	if (a_gradebook.GetCatagory().size() > 0) {
 		std::cout << "Choose a catagory:\n";
-		for (int i = 1; i <= a_gradebook->GetCatagory().size(); i++) {
-			std::cout << i << " - " << a_gradebook->GetCatagory()[i - 1].GetName() << "\n";
+		for (int i = 1; i <= a_gradebook.GetCatagory().size(); i++) {
+			std::cout << i << " - " << a_gradebook.GetCatagory()[i - 1].GetName() << "\n";
 		}
+		std::cout << a_gradebook.GetCatagory().size() + 1 << " - back\n";
+		std::cin >> input;
 	}
-	else std::cout << "No catagories available.\n";
-	std::cout << a_gradebook->GetCatagory().size() + 1 << " - back\n";
-	std::cin >> input;
+	else {
+		std::cout << "No catagories available.\n";
+		input = 0;
+	}
+	
 	return (input - 1);
 }
 
@@ -89,8 +96,29 @@ int ChooseAssignment(Catagory category) {
 	return input - 1;
 }
 
-Catagory EditAssignment(int ass_idx, Catagory category) {
-
+Catagory EditAssignment(int idx, Catagory category) {
+	int input;
+	std::string name = category.GetAssignment()[idx].GetName();
+	int max_score = category.GetAssignment()[idx].GetMaxScore();
+	int score = category.GetAssignment()[idx].GetScore();
+	std::cout << "What would you like to edit(1 - Assignment name, 2 - Assignment max score, 3 - Assignment score): ";
+	std::cin >> input;
+	if (input == 1) {
+		std::cout << "Enter new name: ";
+		std::cin >> name;
+		category.SetAssignment(idx,Assignment(name, max_score, score));
+		
+	}
+	else if (input == 2) {
+		std::cout << "Enter new max score: ";
+		std::cin >> max_score;
+		category.SetAssignment(idx, Assignment(name, max_score, score));
+	}
+	else if (input == 3) {
+		std::cout << "Enter score: ";
+		std::cin >> score;
+		category.SetAssignment(idx, Assignment(name, max_score, score));
+	}
 	return category;
 }
 
@@ -101,7 +129,7 @@ Catagory BuildCatagoryAssignment(Catagory catagory, std::string ass_name, int ma
 	return catagory;
 }
 
-void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_initializer) {
+void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_initializer) {
 	int input, input2;
 	int max_score;
 	std::string s_input;
@@ -111,7 +139,8 @@ void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_init
 	
 
 	while (!back) {
-		std::cout << "What would you like to do with gradebook: " << a_gradebook->GetName() << ":\n";
+		std::cin.clear();
+		std::cout << "What would you like to do with gradebook: " << a_gradebook.GetName() << ":\n";
 		std::cout << "1 - Manage Categories\n"<< "2 - Manage Assignment\n" << "3 - Show Grades\n" << "4 - Back\n";
 		std::cin >> input;
 		
@@ -120,6 +149,10 @@ void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_init
 		case 1:
 			std::cout << "What would you like to do with the categories:\n1 - Add Category\n 2 - Edit category\n 3 - Delete Catagory\n";
 			std::cin >> input;
+			if (std::cin.fail()) {
+				std::cout << "input failed!\n";
+				back = true;
+			}
 			switch (input) {
 			//Category creation
 			case 1:
@@ -127,62 +160,63 @@ void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_init
 				std::cin >> s_input;
 				std::cout << "Would you like to set the weight of " << s_input << " (1 - yes, 2 - no)? ";
 				std::cin >> input;
-				if (input == 2) a_gradebook->AddCatagory(Catagory(s_input));
+				if (input == 2) a_gradebook.AddCatagory(Catagory(s_input));
 				else if (input == 1) {
 					std::cout << "Enter weight(decimal format): ";
 					std::cin >> f_input;
-					a_gradebook->AddCatagory(Catagory(s_input, f_input));
+					a_gradebook.AddCatagory(Catagory(s_input, f_input));
 				}
 				else std::cout << "Invalid Option.\n";
 				break;
 			case 2:
 				input = ChooseCategory(a_gradebook);
-				a_gradebook->SetCatagory(input, EditCatagory(a_gradebook->GetCatagory()[input]));
+				if (input >= 0 && input < a_gradebook.GetCatagory().size()) a_gradebook.SetCatagory(input, EditCatagory(a_gradebook.GetCatagory()[input]));
 				break;
 			case 3:
 				break;
 			}
 			break;
 
-		//assignment creation - not finished/implemented
+		//assignment managment - not finished/implemented
 		case 2:
 			input = ChooseCategory(a_gradebook);
+			if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
+				std::cout << "What would you like to do with " << a_gradebook.GetCatagory()[input].GetName() << " Assingments:\n1 - Add Assignment\n 2 - Edit Assignment\n 3 - Delete Assignment\n";
+				std::cin >> input2;
 
-			std::cout << "What would you like to do with "<< a_gradebook->GetCatagory()[input].GetName() << " Assingments:\n1 - Add Assignment\n 2 - Edit Assignment\n 3 - Delete Assignment\n";
-			std::cin >> input2;
+				switch (input2) {
+				case 1:
+					if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
 
-			switch (input2) {
-			case 1:
-				
+						std::cout << "Assignment title: ";
+						std::cin >> s_input;
 
-				if (input > 0 && input < (a_gradebook->GetCatagory().size() )) {
+						std::cout << "\nMax score: ";
+						std::cin >> max_score;
 
-					std::cout << "Assignment title: ";
-					std::cin >> s_input;
+						a_gradebook.SetCatagory(input, BuildCatagoryAssignment(a_gradebook.GetCatagory()[input], s_input, max_score));
 
-					std::cout << "\nMax score: ";
-					std::cin >> max_score;
-
-					a_gradebook->SetCatagory(input, BuildCatagoryAssignment(a_gradebook->GetCatagory()[input], s_input, max_score));
-
+					}
+					break;
+				case 2:
+					input2 = ChooseAssignment(a_gradebook.GetCatagory()[input]);
+					if (input2 >= 0) a_gradebook.SetCatagory(input, EditAssignment(input2, a_gradebook.GetCatagory()[input]));
+					break;
+				case 3:
+					break;
+				case 4:
+					break;
 				}
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-
-
-				}
-			
+			}
 			break;
 		//Display grades - not finished/implemented
 		case 3:
-			for (int i = 0; i < a_gradebook->GetCatagory().size(); i++) {
-				std::cout << "******************************\n" << a_gradebook->GetCatagory()[i].to_string() << "******************************\n";
-				for (int j = 0; j < a_gradebook->GetCatagory()[i].GetAssignment().size(); j++) {
-					std::cout << a_gradebook->GetCatagory()[i].GetAssignment()[j].to_string();
+			for (int i = 0; i < a_gradebook.GetCatagory().size(); i++) {
+				std::cout << "******************************\n" << a_gradebook.GetCatagory()[i].to_string() << "******************************\n";
+				for (int j = 0; j < a_gradebook.GetCatagory()[i].GetAssignment().size(); j++) {
+					std::cout << a_gradebook.GetCatagory()[i].GetAssignment()[j].to_string();
 				}
+				std::cout << "\n\n";
 			}
 			break;
 		//exit gradebook
@@ -196,7 +230,7 @@ void ManageGradebook(Gradebook*& a_gradebook, std::vector<std::string> load_init
 }
 
 //builds gradebook from data file
-void LoadGradebook(Gradebook*& a_gradebook, std::string load_file, std::vector<std::string> load_initializer) {
+void LoadGradebook(Gradebook & a_gradebook, std::string load_file, std::vector<std::string> load_initializer) {
 	std::ifstream in_file;
 	std::string gb_name;
 	std::string cat_name;
@@ -209,7 +243,7 @@ void LoadGradebook(Gradebook*& a_gradebook, std::string load_file, std::vector<s
 
 	in_file.open(load_file + ".txt");
 	in_file >> gb_name;
-	a_gradebook = new Gradebook(gb_name);
+	a_gradebook = Gradebook(gb_name);
 	//cycle through gradebook data file
 	while (in_file.peek() != EOF) {
 		//pull catagory name, weight and number of assignments from data file
@@ -218,14 +252,14 @@ void LoadGradebook(Gradebook*& a_gradebook, std::string load_file, std::vector<s
 		in_file >> num_assignments;
 
 		//creates Catagory
-		a_gradebook->AddCatagory(Catagory(cat_name, weight)); 
+		a_gradebook.AddCatagory(Catagory(cat_name, weight)); 
 
 		//cycle through assignments adding them to the Catagory
 		for (int i = 0; i < num_assignments; i++) {
 			in_file >> ass_name;
 			in_file >> max_score;
 			in_file >> score;
-			a_gradebook->SetCatagory(cat_count, BuildCatagoryAssignment(a_gradebook->GetCatagory()[cat_count], ass_name, max_score, score));
+			a_gradebook.SetCatagory(cat_count, BuildCatagoryAssignment(a_gradebook.GetCatagory()[cat_count], ass_name, max_score, score));
 		}
 		cat_count++;
 	}
@@ -241,7 +275,8 @@ int main(int argc, char* argv[]) {
 	std::string s_tmp;
 	std::string load_file = "init_load.txt";
 	bool quit = false;
-	Gradebook* a_gradebook;
+	Gradebook a_gradebook = Gradebook("");
+	//Gradebook* a_gradebook;
 	std::vector<std::string> load_initializer;
 	std::ifstream in_file;
 
@@ -273,7 +308,7 @@ int main(int argc, char* argv[]) {
 		case 1:
 			std::cout << "Name of new gradebook's course\n";
 			std::cin >> s_input;
-			a_gradebook = new Gradebook(s_input);
+			a_gradebook =  Gradebook(s_input);
 			ManageGradebook(a_gradebook, load_initializer);
 			break;
 

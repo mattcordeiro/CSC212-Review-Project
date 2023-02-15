@@ -16,6 +16,7 @@ public:
 	double GetWeight();
 	void SetWeight(float weight);
 	std::vector<Assignment> GetAssignment();
+	void SetAssignment(int idx, Assignment assingment);
 	void AddAssignment(Assignment assingment);
 	std::string to_string();
 

@@ -29,6 +29,11 @@ std::string Assignment::GetName()
 	return this->name;
 }
 
+void Assignment::SetName(std::string name)
+{
+	this->name = name;
+}
+
 int Assignment::GetMaxScore()
 {
 	return this->max_score;
@@ -54,7 +59,7 @@ float Assignment::CalculateGrade() {
 std::string Assignment::to_string() {
 	std::string str = "";
 	str += "Assignment: " + this->name + " Grade: " + std::to_string(this->score) + "/"
-		+ std::to_string(this->max_score) + " - " + std::to_string(CalculateGrade()) + "%\n";
+		+ std::to_string(this->max_score) + " - " + std::to_string(CalculateGrade() * 100) + "%\n";
 
 	return str;
 }
