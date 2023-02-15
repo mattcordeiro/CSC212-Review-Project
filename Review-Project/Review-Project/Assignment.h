@@ -13,6 +13,7 @@ public:
 	Assignment(std::string name, int max_score);
 	Assignment(std::string name, int max_score, int score);
 	std::string GetName();
+	void SetName(std::string name);
 	int GetMaxScore();
 	void SetMaxScore(int max_score);
 	int GetScore();

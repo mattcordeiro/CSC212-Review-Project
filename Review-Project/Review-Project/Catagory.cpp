@@ -8,6 +8,10 @@ Catagory::Catagory(std::string name, float weight) {
 	this->name = name;
 	this->weight = weight;
 }
+void Catagory::SetName(std::string name)
+{
+	this->name = name;
+}
 std::string Catagory::GetName() {
 	return this->name;
 }
@@ -20,6 +24,10 @@ void Catagory::SetWeight(float weight) {
 std::vector<Assignment> Catagory::GetAssignment() {
 
 	return this->assignments;
+}
+void Catagory::SetAssignment(int idx, Assignment assingment)
+{
+	this->assignments[idx] = assingment;
 }
 void Catagory::AddAssignment(Assignment assingment) {
 	this->assignments.push_back(assingment);
