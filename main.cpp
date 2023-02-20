@@ -1,7 +1,11 @@
 #include "main.h"
 #include "Gradebook.h"
 #include <fstream>
+<<<<<<< Updated upstream:main.cpp
 #include <iostream>
+=======
+#include <string>
+>>>>>>> Stashed changes:Review-Project/Review-Project/main.cpp
 
 // Builds data file for gradebook
 void SaveGradebook(Gradebook & a_gradebook, std::vector<std::string> load_initializer) {
@@ -97,6 +101,24 @@ int ChooseAssignment(Catagory category) {
 	return input - 1;
 }
 
+//work in progress; 
+
+Assignment DeleteAssignment(int idx, Catagory category){
+    bool back = false;
+    std::string name = category.GetAssignment()[idx].GetName();
+    int max_score = category.GetAssignment()[idx].GetMaxScore();
+    int score = category.GetAssignment()[idx].GetScore();
+    std::cout << "Are you sure you would like to delete this assignment?\n";
+    std::cout << "1-Yes 2-No\n";
+    if(idx==1){
+        //logic for implementing the deletion
+    delete &category;
+    }
+    else{
+        back = true;
+    }
+}
+
 Catagory EditAssignment(int idx, Catagory category) {
 	int input;
 	std::string name = category.GetAssignment()[idx].GetName();
@@ -131,8 +153,9 @@ Catagory BuildCatagoryAssignment(Catagory catagory, std::string ass_name, int ma
 }
 
 void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_initializer) {
-	int input, input2;
-	int max_score;
+	int input;
+    Assignment input2;
+    int max_score;
 	std::string s_input;
 	bool back = false;
 	double f_input;
@@ -146,7 +169,7 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 		std::cin >> input;
 		
 		switch (input) {
-		//catagory management
+		//category management
 		case 1:
 			std::cout << "What would you like to do with the categories:\n1 - Add Category\n 2 - Edit category\n 3 - Delete Catagory\n";
 			std::cin >> input;
@@ -182,7 +205,7 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 		case 2:
 			input = ChooseCategory(a_gradebook);
 			if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
-				std::cout << "What would you like to do with " << a_gradebook.GetCatagory()[input].GetName() << " Assingments:\n1 - Add Assignment\n 2 - Edit Assignment\n 3 - Delete Assignment\n";
+				std::cout << "What would you like to do with " << a_gradebook.GetCatagory()[input].GetName() << " Assingments:\n1 - Add Assignment\n2 - Edit Assignment\n3 - Delete Assignment\n";
 				std::cin >> input2;
 
 				switch (input2) {
@@ -204,8 +227,14 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 					if (input2 >= 0) a_gradebook.SetCatagory(input, EditAssignment(input2, a_gradebook.GetCatagory()[input]));
 					break;
 				case 3:
-					break;
+                    //Deleting an assignment
+                {
+                    int idx;
+                    input2 = DeleteAssignment(idx, a_gradebook);
+                    break;
+                }
 				case 4:
+                    //quitting the current section of the gradebook
 					break;
 				}
 			}
@@ -331,6 +360,7 @@ int main(int argc, char* argv[]) {
 
 			//import - TODO: Import gradebook from a formatted txt file - be sure to check for duplication in init_load.txt and adjust init_load.txt
 		case 3:
+            std::cout << "Import your gradebook!(files support: .txt)\n";
 			break;
 
 			//breaks loop and exits app
