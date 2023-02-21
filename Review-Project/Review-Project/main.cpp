@@ -141,22 +141,21 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 	double f_input;
 	
 	
-
+	//Enter gradebook management menu
 	while (!back) {
 		std::cin.clear();
 		std::cout << "What would you like to do with gradebook: " << a_gradebook.GetName() << ":\n";
 		std::cout << "1 - Manage Categories\n"<< "2 - Manage Assignment\n" << "3 - Show Grades\n" << "4 - Back\n";
 		std::cin >> input;
 		
+		//Outer switch main gradebook management menu
 		switch (input) {
 		//Catagory Management
 		case 1:
 			std::cout << "What would you like to do with the categories:\n1 - Add Category\n 2 - Edit category\n 3 - Delete Catagory\n";
 			std::cin >> input;
-			if (std::cin.fail()) {
-				std::cout << "input failed!\n";
-				back = true;
-			}
+
+			//Inner switch Category management menu
 			switch (input) {
 			//Category Creation
 			case 1:
@@ -192,8 +191,9 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 				std::cout << "What would you like to do with " << a_gradebook.GetCatagory()[input].GetName() << " Assingments:\n1 - Add Assignment\n 2 - Edit Assignment\n 3 - Delete Assignment\n";
 				std::cin >> input2;
 
+				//Inner switch assignment management menu
 				switch (input2) {
-					//Assignment Creation
+				//Assignment Creation
 				case 1:
 					if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
 
@@ -207,12 +207,12 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 
 					}
 					break;
-					//Edit Assignment
+				//Edit Assignment
 				case 2:
 					input2 = ChooseAssignment(a_gradebook.GetCatagory()[input]);
 					if (input2 >= 0) a_gradebook.SetCatagory(input, EditAssignment(input2, a_gradebook.GetCatagory()[input]));
 					break;
-					//Delete Assignment
+				//Delete Assignment
 				case 3:
 					input2 = ChooseAssignment(a_gradebook.GetCatagory()[input]);
 					if (input2 >= 0) a_gradebook.SetCatagory(input, DeleteAssignment(input2, a_gradebook.GetCatagory()[input]));
@@ -309,13 +309,14 @@ int main(int argc, char* argv[]) {
 		}
 		in_file.close();
 
+		//Display Startup Menu
 		std::cout << "***********\n" << "*Gradebook*\n" << "***********\n";
 		std::cout << "1 - New Gradebook\n" << "2 - Load Gradebook\n" << "3 - Import Gradebook\n" << "4 - Quit\n";
 
 		std::cin >> input;
 
 		switch (input) {
-			//initializes new gradebook and passes it to the gradebook manager
+		//initializes new gradebook and passes it to the gradebook manager
 		case 1:
 			std::cout << "Name of new gradebook's course\n";
 			std::cin >> s_input;
@@ -323,7 +324,7 @@ int main(int argc, char* argv[]) {
 			ManageGradebook(a_gradebook, load_initializer);
 			break;
 
-			//load gradebook
+		//load gradebook
 		case 2:
 			//loops through load_initializer printing out choices of gradebooks available to load
 			std::cout << "Which Gradebook would you like to load:\n";
@@ -339,11 +340,11 @@ int main(int argc, char* argv[]) {
 			if (input > 0 && input < menu_count + 1 ) LoadGradebook(a_gradebook, load_initializer[input - 1], load_initializer);
 			break;
 
-			//import - TODO: Import gradebook from a formatted txt file - be sure to check for duplication in init_load.txt and adjust init_load.txt
+		//import - TODO: Import gradebook from a formatted txt file - be sure to check for duplication in init_load.txt and adjust init_load.txt
 		case 3:
 			break;
 
-			//breaks loop and exits app
+		//breaks loop and exits app
 		case 4:
 			quit = true;
 			break;
