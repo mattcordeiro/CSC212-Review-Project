@@ -1,4 +1,3 @@
-#include "main.h"
 #include "Gradebook.h"
 #include <fstream>
 
@@ -122,10 +121,15 @@ Catagory EditAssignment(int idx, Catagory category) {
 	return category;
 }
 
+Catagory DeleteAssignment(int idx, Catagory category) {
+	category.DeleteAssignment(idx);
+	return category;
+}
+
 Catagory BuildCatagoryAssignment(Catagory catagory, std::string ass_name, int max_score, int score = 0) {
 	Assignment assingment(ass_name, max_score, score);
 	catagory.AddAssignment(assingment);
-	if (!(catagory.GetAssignment().size() > 0))std::cout << "BCA not working, size i: " << catagory.GetAssignment().size() << std::endl;
+	if (!(catagory.GetAssignment().size() > 0))std::cout << "BuildCategoryAssignment not working, size i: " << catagory.GetAssignment().size() << std::endl;
 	return catagory;
 }
 
@@ -145,7 +149,7 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 		std::cin >> input;
 		
 		switch (input) {
-		//catagory management
+		//Catagory Management
 		case 1:
 			std::cout << "What would you like to do with the categories:\n1 - Add Category\n 2 - Edit category\n 3 - Delete Catagory\n";
 			std::cin >> input;
@@ -154,7 +158,7 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 				back = true;
 			}
 			switch (input) {
-			//Category creation
+			//Category Creation
 			case 1:
 				std::cout << "Catagory name: ";
 				std::cin >> s_input;
@@ -168,16 +172,20 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 				}
 				else std::cout << "Invalid Option.\n";
 				break;
+			//Edit Category
 			case 2:
 				input = ChooseCategory(a_gradebook);
 				if (input >= 0 && input < a_gradebook.GetCatagory().size()) a_gradebook.SetCatagory(input, EditCatagory(a_gradebook.GetCatagory()[input]));
 				break;
+			//Delete Category
 			case 3:
+				input = ChooseCategory(a_gradebook);
+				if (input >= 0 && input < a_gradebook.GetCatagory().size()) a_gradebook.DeleteCategory(input);
 				break;
 			}
 			break;
 
-		//assignment managment - not finished/implemented
+		//Assignment Managment 
 		case 2:
 			input = ChooseCategory(a_gradebook);
 			if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
@@ -185,6 +193,7 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 				std::cin >> input2;
 
 				switch (input2) {
+					//Assignment Creation
 				case 1:
 					if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
 
@@ -198,13 +207,15 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 
 					}
 					break;
+					//Edit Assignment
 				case 2:
 					input2 = ChooseAssignment(a_gradebook.GetCatagory()[input]);
 					if (input2 >= 0) a_gradebook.SetCatagory(input, EditAssignment(input2, a_gradebook.GetCatagory()[input]));
 					break;
+					//Delete Assignment
 				case 3:
-					break;
-				case 4:
+					input2 = ChooseAssignment(a_gradebook.GetCatagory()[input]);
+					if (input2 >= 0) a_gradebook.SetCatagory(input, DeleteAssignment(input2, a_gradebook.GetCatagory()[input]));
 					break;
 				}
 			}

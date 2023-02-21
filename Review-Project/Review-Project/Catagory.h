@@ -1,4 +1,3 @@
-#pragma once
 #include "Assignment.h"
 #include <vector>
 
@@ -18,6 +17,7 @@ public:
 	std::vector<Assignment> GetAssignment();
 	void SetAssignment(int idx, Assignment assingment);
 	void AddAssignment(Assignment assingment);
+	void DeleteAssignment(int idx);
 	std::string to_string();
 
 };

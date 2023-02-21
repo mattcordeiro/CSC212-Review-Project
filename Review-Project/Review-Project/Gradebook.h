@@ -1,4 +1,3 @@
-#pragma once
 #include "Catagory.h"
 
 class Gradebook
@@ -12,6 +11,7 @@ public:
 	void SetCatagory(int idx, Catagory catagory);
 	std::vector<Catagory> GetCatagory();
 	void AddCatagory(Catagory catagory);
+	void DeleteCategory(int idx);
 	std::string to_string();
 };
 
