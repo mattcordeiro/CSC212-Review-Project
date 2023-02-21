@@ -33,8 +33,9 @@ void Catagory::AddAssignment(Assignment assingment) {
 	this->assignments.push_back(assingment);
 }
 
-void Catagory::DeleteAssignment()
+void Catagory::DeleteAssignment(int idx)
 {
+	this->assignments.erase(assignments.begin() + idx);
 }
 
 std::string Catagory::to_string() {

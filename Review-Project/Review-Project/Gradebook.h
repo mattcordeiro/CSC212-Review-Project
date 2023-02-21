@@ -11,7 +11,7 @@ public:
 	void SetCatagory(int idx, Catagory catagory);
 	std::vector<Catagory> GetCatagory();
 	void AddCatagory(Catagory catagory);
-	void DeleteCategory();
+	void DeleteCategory(int idx);
 	std::string to_string();
 };
 
