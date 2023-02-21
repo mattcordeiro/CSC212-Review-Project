@@ -1,4 +1,3 @@
-#include "main.h"
 #include "Gradebook.h"
 #include <fstream>
 
@@ -125,7 +124,7 @@ Catagory EditAssignment(int idx, Catagory category) {
 Catagory BuildCatagoryAssignment(Catagory catagory, std::string ass_name, int max_score, int score = 0) {
 	Assignment assingment(ass_name, max_score, score);
 	catagory.AddAssignment(assingment);
-	if (!(catagory.GetAssignment().size() > 0))std::cout << "BCA not working, size i: " << catagory.GetAssignment().size() << std::endl;
+	if (!(catagory.GetAssignment().size() > 0))std::cout << "BuildCategoryAssignment() not working, size i: " << catagory.GetAssignment().size() << std::endl;
 	return catagory;
 }
 
@@ -168,10 +167,12 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 				}
 				else std::cout << "Invalid Option.\n";
 				break;
+			//Edit category
 			case 2:
 				input = ChooseCategory(a_gradebook);
 				if (input >= 0 && input < a_gradebook.GetCatagory().size()) a_gradebook.SetCatagory(input, EditCatagory(a_gradebook.GetCatagory()[input]));
 				break;
+			//Delete category
 			case 3:
 				break;
 			}

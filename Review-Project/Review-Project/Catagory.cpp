@@ -33,6 +33,10 @@ void Catagory::AddAssignment(Assignment assingment) {
 	this->assignments.push_back(assingment);
 }
 
+void Catagory::DeleteAssignment()
+{
+}
+
 std::string Catagory::to_string() {
 	std::string str = "";
 	str += this->name + " Has " + std::to_string(this->assignments.size()) + " Assingments\n";

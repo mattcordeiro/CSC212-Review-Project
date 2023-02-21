@@ -14,6 +14,9 @@ std::vector<Catagory> Gradebook::GetCatagory() {
 void Gradebook::AddCatagory(Catagory catagory) {
 	this->catagories.push_back(catagory);
 }
+void Gradebook::DeleteCategory()
+{
+}
 std::string Gradebook::to_string() {
 	std::string str = "";
 	str += this->name + "\n";
