@@ -1,0 +1,16 @@
+Group members tasks.
+Matt:
+-Commenting the code
+-Code Analysis
+-README
+
+Brent:
+?-Grade outputs
+
+Jacob:
+-string input
+-grade calculations
+
+Daniel:
+-input validation(int)
+-merge working changes into main
