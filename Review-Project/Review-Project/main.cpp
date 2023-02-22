@@ -147,7 +147,8 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 	bool back = false;
 	double f_input;
 
-    //
+	//Enter gradebook management menu
+
 	while (!back) {
         //while the user doesn't go back in the menu; the following logic will take place
 		std::cin.clear();
@@ -156,17 +157,15 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
         //the user will provide an input to the logic choices above to categorize
 		std::cin >> input;
 		
+		//Outer switch main gradebook management menu
 		switch (input) {
 		//Catagory Management
 		case 1:
 			std::cout << "What would you like to do with the categories:\n1 - Add Category\n2 - Edit category\n3 - Delete Catagory\n";
 			std::cin >> input;
-            //if the input is invalid, the following conditional will execute
-			if (std::cin.fail()) {
-				std::cout << "input failed!\n";
-				back = true;
-			}
-            //else, the category
+
+			//Inner switch Category management menu
+
 			switch (input) {
 			//Category Creation
 			case 1:
@@ -206,9 +205,11 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 			if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
 				std::cout << "What would you like to do with " << a_gradebook.GetCatagory()[input].GetName() << " Assignments:\n1 - Add Assignment\n 2 - Edit Assignment\n 3 - Delete Assignment\n";
 				std::cin >> input2;
+
         //switch statements to modify assignment within a gradebook
+
 				switch (input2) {
-					//Assignment Creation
+				//Assignment Creation
 				case 1:
                     // if input is greater than or equal to zero and input is less than the Category size
 					if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
@@ -224,13 +225,13 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 						a_gradebook.SetCatagory(input, BuildCatagoryAssignment(a_gradebook.GetCatagory()[input], s_input, max_score));
 					}
 					break;
-					//Edit Assignment
+				//Edit Assignment
 				case 2:
                     //input2 chooses the assignment at the index=input
 					input2 = ChooseAssignment(a_gradebook.GetCatagory()[input]);
 					if (input2 >= 0) a_gradebook.SetCatagory(input, EditAssignment(input2, a_gradebook.GetCatagory()[input]));
 					break;
-					//Delete Assignment
+				//Delete Assignment
 				case 3:
 					input2 = ChooseAssignment(a_gradebook.GetCatagory()[input]);
 					if (input2 >= 0) a_gradebook.SetCatagory(input, DeleteAssignment(input2, a_gradebook.GetCatagory()[input]));
@@ -329,14 +330,15 @@ int main(int argc, char* argv[]) {
 		}
 		in_file.close();                            //once the while loop if finished, this will then close the file
 
-
         //initial look of the gradebook during run time
+
 		std::cout << "***********\n" << "*Gradebook*\n" << "***********\n";
 		std::cout << "1 - New Gradebook\n" << "2 - Load Gradebook\n" << "3 - Import Gradebook\n" << "4 - Quit\n";
 
 		std::cin >> input;  //taking in user selection to envoke the gradebook options above.
 
 		switch (input) {
+
 			//initializes new gradebook and passes it to the gradebook manager
             //case 1: creating a new Gradebook
 		case 1:
@@ -347,7 +349,7 @@ int main(int argc, char* argv[]) {
             //previously filled while going through the in file
 			break;
 
-			//load gradebook
+		//load gradebook
 		case 2:
 			//loops through load_initializer printing out choices of gradebooks available to load
 			std::cout << "Which Gradebook would you like to load:\n";
@@ -365,6 +367,7 @@ int main(int argc, char* argv[]) {
 			//if choice is within range call LoadGradeook()
 			if (input > 0 && input < menu_count + 1 ) LoadGradebook(a_gradebook, load_initializer[input - 1], load_initializer);
 			break;
+
 
 			//import - TODO: Import gradebook from a formatted txt file - be sure to check for duplication in init_load.txt and adjust init_load.txt
 		case 3: {
