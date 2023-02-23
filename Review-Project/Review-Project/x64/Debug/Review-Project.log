@@ -1,5 +1,4 @@
 ﻿  main.cpp
-C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(61,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(170,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  LINK : C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\x64\Debug\Review-Project.exe not found or not built by the last incremental link; performing full link
+C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(82,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(205,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Review-Project.vcxproj -> C:\Users\drjac\source\repos\CSC212-Review-Project\CSC212-Review-Project\Review-Project\x64\Debug\Review-Project.exe

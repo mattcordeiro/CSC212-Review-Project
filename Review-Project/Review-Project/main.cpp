@@ -1,6 +1,27 @@
 #include "Gradebook.h"
 #include <fstream>
 
+//Validate integer input
+int ValidIntInput() {
+	bool valid = false;
+	std::string s_input;
+	int input = -1;
+
+	std::cin >> s_input;
+	while (!valid) {
+		for (int i = 0; i < s_input.length(); i++) {
+			if (isalpha(s_input[i]) || !isalnum(s_input[i])){
+				std::cout << "Invalid input! \nRe-Enter: ";
+				std::cin >> s_input;
+				valid = false;
+				continue;
+			}
+			else valid = true;
+		}
+	}
+	return std::stoi(s_input);
+}
+
 // Builds data file for gradebook
 void SaveGradebook(Gradebook & a_gradebook, std::vector<std::string> load_initializer) {
 	bool found = false; //used to check if gradebook exists in init_load.txt
@@ -49,7 +70,7 @@ Catagory EditCatagory(Catagory category) {
 	std::string name;
 	double weight;
 	std::cout << "What would you like to edit(1 - Category name, 2 - Category weight): ";
-	std::cin >> input;
+	input = ValidIntInput();
 	if (input == 1) {
 		std::cout << "Enter new name: ";
 		std::cin >> name;
@@ -71,7 +92,7 @@ int ChooseCategory(Gradebook & a_gradebook) {
 			std::cout << i << " - " << a_gradebook.GetCatagory()[i - 1].GetName() << "\n";
 		}
 		std::cout << a_gradebook.GetCatagory().size() + 1 << " - back\n";
-		std::cin >> input;
+		input = ValidIntInput();
 	}
 	else {
 		std::cout << "No catagories available.\n";
@@ -91,7 +112,7 @@ int ChooseAssignment(Catagory category) {
 	}
 	else std::cout << "No assignments available.\n";
 	std::cout << category.GetAssignment().size() + 1 << " - back\n";
-	std::cin >> input;
+	input = ValidIntInput();
 	return input - 1;
 }
 
@@ -101,7 +122,7 @@ Catagory EditAssignment(int idx, Catagory category) {
 	int max_score = category.GetAssignment()[idx].GetMaxScore();
 	int score = category.GetAssignment()[idx].GetScore();
 	std::cout << "What would you like to edit(1 - Assignment name, 2 - Assignment max score, 3 - Assignment score): ";
-	std::cin >> input;
+	input = ValidIntInput();
     //Set an assignment name
 	if (input == 1) {
 		std::cout << "Enter new name: ";
@@ -155,14 +176,14 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 		std::cout << "What would you like to do with gradebook: " << a_gradebook.GetName() << ":\n";
 		std::cout << "1 - Manage Categories\n"<< "2 - Manage Assignment\n" << "3 - Show Grades\n" << "4 - Back\n";
         //the user will provide an input to the logic choices above to categorize
-		std::cin >> input;
+		input = ValidIntInput();
 		
 		//Outer switch main gradebook management menu
 		switch (input) {
 		//Catagory Management
 		case 1:
-			std::cout << "What would you like to do with the categories:\n1 - Add Category\n2 - Edit category\n3 - Delete Catagory\n";
-			std::cin >> input;
+			std::cout << "What would you like to do with the categories:\n1 - Add Category\n2 - Edit category\n3 - Delete Catagory\n4 - Back\n";
+			input = ValidIntInput();
 
 			//Inner switch Category management menu
 
@@ -173,7 +194,7 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 				std::cout << "Catagory name: ";
 				std::cin >> s_input;
 				std::cout << "Would you like to set the weight of " << s_input << " (1 - yes, 2 - no)? ";
-				std::cin >> input;
+				input = ValidIntInput();
                 //if the user would not like to set the weight of the category the if statement will run
 				if (input == 2) a_gradebook.AddCatagory(Catagory(s_input));
                 //if the user would like to set the weight, they must enter it in decimal format
@@ -203,8 +224,8 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 		case 2:
 			input = ChooseCategory(a_gradebook);
 			if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
-				std::cout << "What would you like to do with " << a_gradebook.GetCatagory()[input].GetName() << " Assignments:\n1 - Add Assignment\n 2 - Edit Assignment\n 3 - Delete Assignment\n";
-				std::cin >> input2;
+				std::cout << "What would you like to do with " << a_gradebook.GetCatagory()[input].GetName() << " Assignments:\n1 - Add Assignment\n2 - Edit Assignment\n3 - Delete Assignment\n4 - Back\n";
+				input2 = ValidIntInput();
 
         //switch statements to modify assignment within a gradebook
 
@@ -308,7 +329,6 @@ int main(int argc, char* argv[]) {
 	std::string load_file = "init_load.txt";    //string for holding data from the initial gradebook file
 	bool quit = false;               //setting the quit option for the gradebook to false so that way when user would like to exit it is set to true
 	Gradebook a_gradebook = Gradebook("");   //using the Gradebook class to make an empty gradebook that will take in a name
-	//Gradebook* a_gradebook;
 	std::vector<std::string> load_initializer;      //taking in the strings into a vector of strings in order to hold data from load
 	std::ifstream in_file;                          ////creating the file stream in order to manipulate file contents
 
@@ -335,8 +355,8 @@ int main(int argc, char* argv[]) {
 		std::cout << "***********\n" << "*Gradebook*\n" << "***********\n";
 		std::cout << "1 - New Gradebook\n" << "2 - Load Gradebook\n" << "3 - Import Gradebook\n" << "4 - Quit\n";
 
-		std::cin >> input;  //taking in user selection to envoke the gradebook options above.
-
+		//std::cin >> input;  //taking in user selection to envoke the gradebook options above.
+		input = ValidIntInput();
 		switch (input) {
 
 			//initializes new gradebook and passes it to the gradebook manager
@@ -362,7 +382,7 @@ int main(int argc, char* argv[]) {
 			}
 
 			std::cout << menu_count + 1 << " - Back\n"; //will allow the user to go back depending on the menu size +1 to ensure that it is always last
-			std::cin >> input;
+			input = ValidIntInput();
 
 			//if choice is within range call LoadGradeook()
 			if (input > 0 && input < menu_count + 1 ) LoadGradebook(a_gradebook, load_initializer[input - 1], load_initializer);
