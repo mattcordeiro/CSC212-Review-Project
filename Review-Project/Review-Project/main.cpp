@@ -87,6 +87,7 @@ Catagory EditCatagory(Catagory category) {
 	int input;
 	std::string name;
 	double weight;
+    //User has the option to edit the category name and weight with logic down below
 	std::cout << "What would you like to edit(1 - Category name, 2 - Category weight): ";
 	input = ValidIntInput();
 	if (input == 1) {
@@ -103,9 +104,9 @@ Catagory EditCatagory(Catagory category) {
 	}
 	return category;
 }
-
 int ChooseCategory(Gradebook & a_gradebook) {
 	int input;
+    //User has the option to choose the assignment with logic down below if there is a assignment in a_gradebook, if not there's no assignments available
 	if (a_gradebook.GetCatagory().size() > 0) {
 		std::cout << "Choose a catagory:\n";
 		for (int i = 1; i <= a_gradebook.GetCatagory().size(); i++) {
@@ -115,7 +116,7 @@ int ChooseCategory(Gradebook & a_gradebook) {
 		input = ValidIntInput();
 	}
 	else {
-		std::cout << "No catagories available.\n";
+		std::cout << "No assignments available.\n";
 		input = 0;
 	}
 
@@ -135,6 +136,7 @@ int ChooseAssignment(Catagory category) {
 	input = ValidIntInput();
 	return input - 1;
 }
+//debug above
 
 Catagory EditAssignment(int idx, Catagory category) {
 	int input;

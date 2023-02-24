@@ -1,5 +1,6 @@
 #include "Catagory.h"
 
+//default constructor
 Catagory::Catagory(std::string name) {
 	this->name = name;
 	this->weight = 0;
@@ -40,7 +41,7 @@ void Catagory::DeleteAssignment(int idx)
 
 std::string Catagory::to_string() {
 	std::string str = "";
-	str += this->name + " Has " + std::to_string(this->assignments.size()) + " Assingments\n";
+	str += this->name + " Has " + std::to_string(this->assignments.size()) + " Assignments\n";
 
 	return str;
 }
