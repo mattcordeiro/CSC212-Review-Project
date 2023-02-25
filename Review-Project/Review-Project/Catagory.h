@@ -30,6 +30,8 @@ public:
 	void AddAssignment(Assignment assignment);
     //deleting an assignment at a given index
 	void DeleteAssignment(int idx);
+	//calculate category grade
+	double CalculateCategoryGradePoints();
 	std::string to_string();
 
 };

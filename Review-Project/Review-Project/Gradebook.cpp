@@ -28,6 +28,20 @@ void Gradebook::DeleteCategory(int idx)
 	this->catagories.erase(catagories.begin() + idx);
 }
 
+double Gradebook::CalculateTotalGradePoints()
+{
+	int total_max_score = 0;
+	int total_score = 0;
+
+	for (int i = 0; i < catagories.size(); i++) {
+		for (int j = 0; j < catagories[i].GetAssignment().size(); j++) {
+			total_max_score += catagories[i].GetAssignment()[j].GetMaxScore();
+			total_score += catagories[i].GetAssignment()[j].GetScore();
+		}
+	}
+	return (((double)total_score / (double)total_max_score) * 100);
+}
+
 //gradebook output string
 std::string Gradebook::to_string() {
 	std::string str = "";

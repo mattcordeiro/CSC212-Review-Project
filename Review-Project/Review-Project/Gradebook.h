@@ -15,6 +15,7 @@ public:
 	std::vector<Catagory> GetCatagory();
 	void AddCatagory(Catagory catagory);
 	void DeleteCategory(int idx);
+	double CalculateTotalGradePoints();
 	std::string to_string();
 };
 
