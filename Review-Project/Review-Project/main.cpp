@@ -1,5 +1,23 @@
 #include "Gradebook.h"
 #include <fstream>
+#include <sstream>
+
+std::string ConcatInputs(std::string input) {
+    int i;
+    std::vector<std::string> tokens;
+    std::stringstream check1(input);
+    std::string temp;
+    if(input.find(' ', 0) != std::string::npos){
+        while(std::getline(check1, temp, ' ')){
+            tokens.push_back(temp);
+        }
+        input = tokens[0];
+        for(i = 1; i < tokens.size(); i++){
+            input += "-" + tokens[i];
+        }
+    }
+    return input;
+}
 
 //Validate integer input
 int ValidIntInput() {
@@ -37,7 +55,7 @@ void SaveGradebook(Gradebook & a_gradebook, std::vector<std::string> load_initia
 		//out_file << a_gradebook->GetCatagory()[i].GetAssignment().size() + "\n";
 		t_catagory = a_gradebook.GetCatagory()[i];
 		out_file << "\n" << std::to_string(t_catagory.GetAssignment().size()) ;
-				
+
 		for (int j = 0; j < t_catagory.GetAssignment().size(); j++) {
 			out_file <<  "\n" << a_gradebook.GetCatagory()[i].GetAssignment()[j].GetName() + " " + std::to_string(a_gradebook.GetCatagory()[i].GetAssignment()[j].GetMaxScore())
 				+ " " + std::to_string(a_gradebook.GetCatagory()[i].GetAssignment()[j].GetScore());
@@ -55,7 +73,7 @@ void SaveGradebook(Gradebook & a_gradebook, std::vector<std::string> load_initia
 	// adds gradebook to init_load.txt if not found
 	if (!found) {
 		out_file.open("init_load.txt", std::ofstream::trunc);
-		
+
 		for (int i = 0; i < load_initializer.size(); i++) {
 			out_file << load_initializer[i] + "\n";
 		}
@@ -74,7 +92,9 @@ Catagory EditCatagory(Catagory category) {
 	input = ValidIntInput();
 	if (input == 1) {
 		std::cout << "Enter new name: ";
-		std::cin >> name;
+        std::cin.ignore();
+        std::getline(std::cin, name);
+        name = ConcatInputs(name);
 		category.SetName(name);
 	}
 	else if (input == 2) {
@@ -128,9 +148,11 @@ Catagory EditAssignment(int idx, Catagory category) {
     //Set an assignment name
 	if (input == 1) {
 		std::cout << "Enter new name: ";
-		std::cin >> name;
+        std::cin.ignore();
+        std::getline(std::cin, name);
+        name = ConcatInputs(name);
 		category.SetAssignment(idx,Assignment(name, max_score, score));
-		
+
 	}
     //Set an assignment max score
 	else if (input == 2) {
@@ -179,7 +201,7 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 		std::cout << "1 - Manage Categories\n"<< "2 - Manage Assignment\n" << "3 - Show Grades\n" << "4 - Back\n";
         //the user will provide an input to the logic choices above to categorize
 		input = ValidIntInput();
-		
+
 		//Outer switch main gradebook management menu
 		switch (input) {
 		//Catagory Management
@@ -194,7 +216,9 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 			case 1:
                 //
 				std::cout << "Catagory name: ";
-				std::cin >> s_input;
+                    std::cin.ignore();
+                    std::getline(std::cin, s_input);
+                    s_input = ConcatInputs(s_input);
 				std::cout << "Would you like to set the weight of " << s_input << " (1 - yes, 2 - no)? ";
 				input = ValidIntInput();
                 //if the user would not like to set the weight of the category the if statement will run
@@ -238,7 +262,9 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 					if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
                     //if there is an assignment to add, the two lines below will get the assignment title and display
 						std::cout << "Assignment title: ";
-						std::cin >> s_input;
+                        std::cin.ignore();
+                        std::getline(std::cin, s_input);
+                        s_input = ConcatInputs(s_input);
 
                         //if there is an assignment to add, this will show its max score
 						std::cout << "\nMax score: ";
@@ -304,11 +330,11 @@ void LoadGradebook(Gradebook & a_gradebook, std::string load_file, std::vector<s
 	while (in_file.peek() != EOF) {
 		//pull category name, weight and number of assignments from data file
 		in_file >> cat_name;
-		in_file >> weight;		
+		in_file >> weight;
 		in_file >> num_assignments;
 
 		//creates Catagory
-		a_gradebook.AddCatagory(Catagory(cat_name, weight)); 
+		a_gradebook.AddCatagory(Catagory(cat_name, weight));
 
 		//cycle through assignments adding them to the Category
 		for (int i = 0; i < num_assignments; i++) {
@@ -365,7 +391,9 @@ int main(int argc, char* argv[]) {
             //case 1: creating a new Gradebook
 		case 1:
 			std::cout << "Name of new gradebook's course\n";
-			std::cin >> s_input;
+            std::cin.ignore();
+            std::getline(std::cin, s_input);
+            s_input = ConcatInputs(s_input);
 			a_gradebook =  Gradebook(s_input); //creating a gradebook from Gradebook class with the string that is taken in from the user. and is assigned to a_gradebook
 			ManageGradebook(a_gradebook, load_initializer); //Calls void function from above with the gradebook that was just created and the load initializer that
             //previously filled while going through the in file
