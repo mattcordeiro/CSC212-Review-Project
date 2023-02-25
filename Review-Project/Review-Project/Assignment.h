@@ -17,7 +17,7 @@ public:
 	void SetMaxScore(int max_score);
 	int GetScore();
 	void SetScore(int score);
-	float CalculateGrade();
+	double CalculateGrade();
 	std::string to_string();
 };
 
