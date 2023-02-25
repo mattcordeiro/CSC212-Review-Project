@@ -9,16 +9,16 @@ Gradebook::Gradebook(std::string name) {
 std::string Gradebook::GetName() {
 	return this->name;
 
-}void Gradebook::SetCatagory(int idx, Catagory catagory) {
+}void Gradebook::SetCategory(int idx, Category catagory) {
 	this->catagories[idx] = catagory;
 }
 
-std::vector<Catagory> Gradebook::GetCatagory() {
+std::vector<Category> Gradebook::GetCategory() {
 	return this->catagories;
 }
 
 //This pushes back a new category in order to create a new grading criteria (Labs/Assignments/Exam/etc)
-void Gradebook::AddCatagory(Catagory catagory) {
+void Gradebook::AddCategory(Category catagory) {
 	this->catagories.push_back(catagory);
 }
 

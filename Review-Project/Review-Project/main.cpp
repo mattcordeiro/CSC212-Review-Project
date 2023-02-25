@@ -46,22 +46,22 @@ int ValidIntInput() {
 // Builds data file for gradebook
 void SaveGradebook(Gradebook & a_gradebook, std::vector<std::string> load_initializer) {
 	bool found = false; //used to check if gradebook exists in init_load.txt
-	Catagory t_catagory = Catagory(" ");
+	Category t_catagory = Category(" ");
 	std::ofstream out_file;
 	out_file.open(a_gradebook.GetName() + ".txt", std::ofstream::trunc); // opens txt file with gradebook name
 
 	out_file << a_gradebook.GetName();
 
 	//cycle through each catagory and adds its fields and its assignments fields to the data file
-	for(int i = 0; i < a_gradebook.GetCatagory().size();i++) {
-		out_file << "\n" << a_gradebook.GetCatagory()[i].GetName() + " " + std::to_string(a_gradebook.GetCatagory()[i].GetWeight());
+	for(int i = 0; i < a_gradebook.GetCategory().size();i++) {
+		out_file << "\n" << a_gradebook.GetCategory()[i].GetName() + " " + std::to_string(a_gradebook.GetCategory()[i].GetWeight());
 		//out_file << a_gradebook->GetCatagory()[i].GetAssignment().size() + "\n";
-		t_catagory = a_gradebook.GetCatagory()[i];
+		t_catagory = a_gradebook.GetCategory()[i];
 		out_file << "\n" << std::to_string(t_catagory.GetAssignment().size()) ;
 
 		for (int j = 0; j < t_catagory.GetAssignment().size(); j++) {
-			out_file <<  "\n" << a_gradebook.GetCatagory()[i].GetAssignment()[j].GetName() + " " + std::to_string(a_gradebook.GetCatagory()[i].GetAssignment()[j].GetMaxScore())
-				+ " " + std::to_string(a_gradebook.GetCatagory()[i].GetAssignment()[j].GetScore());
+			out_file <<  "\n" << a_gradebook.GetCategory()[i].GetAssignment()[j].GetName() + " " + std::to_string(a_gradebook.GetCategory()[i].GetAssignment()[j].GetMaxScore())
+				+ " " + std::to_string(a_gradebook.GetCategory()[i].GetAssignment()[j].GetScore());
 		}
 	}
 	out_file.close();
@@ -86,7 +86,7 @@ void SaveGradebook(Gradebook & a_gradebook, std::vector<std::string> load_initia
 
 }
 
-Catagory EditCatagory(Catagory category) {
+Category EditCatagory(Category category) {
 	int input;
 	std::string name;
 	double weight;
@@ -110,12 +110,12 @@ Catagory EditCatagory(Catagory category) {
 int ChooseCategory(Gradebook & a_gradebook) {
 	int input;
     //User has the option to choose the assignment with logic down below if there is a assignment in a_gradebook, if not there's no assignments available
-	if (a_gradebook.GetCatagory().size() > 0) {
+	if (a_gradebook.GetCategory().size() > 0) {
 		std::cout << "Choose a catagory:\n";
-		for (int i = 1; i <= a_gradebook.GetCatagory().size(); i++) {
-			std::cout << i << " - " << a_gradebook.GetCatagory()[i - 1].GetName() << "\n";
+		for (int i = 1; i <= a_gradebook.GetCategory().size(); i++) {
+			std::cout << i << " - " << a_gradebook.GetCategory()[i - 1].GetName() << "\n";
 		}
-		std::cout << a_gradebook.GetCatagory().size() + 1 << " - back\n";
+		std::cout << a_gradebook.GetCategory().size() + 1 << " - back\n";
 		input = ValidIntInput();
 	}
 	else {
@@ -126,7 +126,7 @@ int ChooseCategory(Gradebook & a_gradebook) {
 	return (input - 1);
 }
 
-int ChooseAssignment(Catagory category) {
+int ChooseAssignment(Category category) {
 	int input;
 	if (category.GetAssignment().size() > 0) {
 		std::cout << "Choose assignment:\n";
@@ -141,7 +141,7 @@ int ChooseAssignment(Catagory category) {
 }
 //debug above
 
-Catagory EditAssignment(int idx, Catagory category) {
+Category EditAssignment(int idx, Category category) {
 	int input;
 	std::string name = category.GetAssignment()[idx].GetName();
 	int max_score = category.GetAssignment()[idx].GetMaxScore();
@@ -172,13 +172,13 @@ Catagory EditAssignment(int idx, Catagory category) {
 	return category;
 }
 
-Catagory DeleteAssignment(int idx, Catagory category) {
+Category DeleteAssignment(int idx, Category category) {
     //Deletes assignment from category at a given index
 	category.DeleteAssignment(idx);
 	return category;
 }
 
-Catagory BuildCatagoryAssignment(Catagory category, std::string ass_name, int max_score, int score = 0) {
+Category BuildCatagoryAssignment(Category category, std::string ass_name, int max_score, int score = 0) {
     //this catagory method takes in category, assignment_name, the max_score, and the inital score
 	Assignment assignment(ass_name, max_score, score);
     //adds assignment to the catagory
@@ -225,13 +225,13 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 				std::cout << "Would you like to set the weight of " << s_input << " (1 - yes, 2 - no)? ";
 				input = ValidIntInput();
                 //if the user would not like to set the weight of the category the if statement will run
-				if (input == 2) a_gradebook.AddCatagory(Catagory(s_input));
+				if (input == 2) a_gradebook.AddCategory(Category(s_input));
                 //if the user would like to set the weight, they must enter it in decimal format
                 //then the weight and name of the category will be entered into a_gradebook
 				else if (input == 1) {
 					std::cout << "Enter weight(decimal format): ";
 					std::cin >> f_input;
-					a_gradebook.AddCatagory(Catagory(s_input, f_input));
+					a_gradebook.AddCategory(Category(s_input, f_input));
 				}
                 //all else fails, they'll see an invalid option
 				else std::cout << "Invalid Option.\n";
@@ -239,12 +239,12 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 			//Edit Category
 			case 2:
 				input = ChooseCategory(a_gradebook);
-				if (input >= 0 && input < a_gradebook.GetCatagory().size()) a_gradebook.SetCatagory(input, EditCatagory(a_gradebook.GetCatagory()[input]));
+				if (input >= 0 && input < a_gradebook.GetCategory().size()) a_gradebook.SetCategory(input, EditCatagory(a_gradebook.GetCategory()[input]));
 				break;
 			//Delete Category
 			case 3:
 				input = ChooseCategory(a_gradebook);
-				if (input >= 0 && input < a_gradebook.GetCatagory().size()) a_gradebook.DeleteCategory(input);
+				if (input >= 0 && input < a_gradebook.GetCategory().size()) a_gradebook.DeleteCategory(input);
 				break;
 			}
 			break;
@@ -252,8 +252,8 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 		//Assignment Management
 		case 2:
 			input = ChooseCategory(a_gradebook);
-			if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
-				std::cout << "What would you like to do with " << a_gradebook.GetCatagory()[input].GetName() << " Assignments:\n1 - Add Assignment\n2 - Edit Assignment\n3 - Delete Assignment\n4 - Back\n";
+			if (input >= 0 && input < a_gradebook.GetCategory().size()) {
+				std::cout << "What would you like to do with " << a_gradebook.GetCategory()[input].GetName() << " Assignments:\n1 - Add Assignment\n2 - Edit Assignment\n3 - Delete Assignment\n4 - Back\n";
 				input2 = ValidIntInput();
 
         //switch statements to modify assignment within a gradebook
@@ -262,7 +262,7 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 				//Assignment Creation
 				case 1:
                     // if input is greater than or equal to zero and input is less than the Category size
-					if (input >= 0 && input < a_gradebook.GetCatagory().size()) {
+					if (input >= 0 && input < a_gradebook.GetCategory().size()) {
                     //if there is an assignment to add, the two lines below will get the assignment title and display
 						std::cout << "Assignment title: ";
                         std::cin.ignore();
@@ -274,19 +274,19 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 						std::cin >> max_score;
 
                         //finally a_gradebook will use .SetCatagory with the initial input as the index, then will call on the BuildCatagorry Assignment to create the assignment with the s_input and the max score
-						a_gradebook.SetCatagory(input, BuildCatagoryAssignment(a_gradebook.GetCatagory()[input], s_input, max_score));
+						a_gradebook.SetCategory(input, BuildCatagoryAssignment(a_gradebook.GetCategory()[input], s_input, max_score));
 					}
 					break;
 				//Edit Assignment
 				case 2:
                     //input2 chooses the assignment at the index=input
-					input2 = ChooseAssignment(a_gradebook.GetCatagory()[input]);
-					if (input2 >= 0) a_gradebook.SetCatagory(input, EditAssignment(input2, a_gradebook.GetCatagory()[input]));
+					input2 = ChooseAssignment(a_gradebook.GetCategory()[input]);
+					if (input2 >= 0) a_gradebook.SetCategory(input, EditAssignment(input2, a_gradebook.GetCategory()[input]));
 					break;
 				//Delete Assignment
 				case 3:
-					input2 = ChooseAssignment(a_gradebook.GetCatagory()[input]);
-					if (input2 >= 0) a_gradebook.SetCatagory(input, DeleteAssignment(input2, a_gradebook.GetCatagory()[input]));
+					input2 = ChooseAssignment(a_gradebook.GetCategory()[input]);
+					if (input2 >= 0) a_gradebook.SetCategory(input, DeleteAssignment(input2, a_gradebook.GetCategory()[input]));
 					break;
 				}
 			}
@@ -295,10 +295,10 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 
 		//Display grades - not finished/implemented
 		case 3:
-			for (int i = 0; i < a_gradebook.GetCatagory().size(); i++) {
-				std::cout << "******************************\n" << a_gradebook.GetCatagory()[i].to_string() << "******************************\n";
-				for (int j = 0; j < a_gradebook.GetCatagory()[i].GetAssignment().size(); j++) {
-					std::cout << a_gradebook.GetCatagory()[i].GetAssignment()[j].to_string();
+			for (int i = 0; i < a_gradebook.GetCategory().size(); i++) {
+				std::cout << "******************************\n" << a_gradebook.GetCategory()[i].to_string() << "******************************\n";
+				for (int j = 0; j < a_gradebook.GetCategory()[i].GetAssignment().size(); j++) {
+					std::cout << a_gradebook.GetCategory()[i].GetAssignment()[j].to_string();
 				}
 				std::cout << "\n\n";
 			}
@@ -337,14 +337,14 @@ void LoadGradebook(Gradebook & a_gradebook, std::string load_file, std::vector<s
 		in_file >> num_assignments;
 
 		//creates Catagory
-		a_gradebook.AddCatagory(Catagory(cat_name, weight));
+		a_gradebook.AddCategory(Category(cat_name, weight));
 
 		//cycle through assignments adding them to the Category
 		for (int i = 0; i < num_assignments; i++) {
 			in_file >> ass_name;
 			in_file >> max_score;
 			in_file >> score;
-			a_gradebook.SetCatagory(cat_count, BuildCatagoryAssignment(a_gradebook.GetCatagory()[cat_count], ass_name, max_score, score));
+			a_gradebook.SetCategory(cat_count, BuildCatagoryAssignment(a_gradebook.GetCategory()[cat_count], ass_name, max_score, score));
 		}
 		cat_count++;
 	}
