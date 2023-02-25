@@ -18,7 +18,7 @@
     <ClInclude Include="Assignment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Catagory.h">
+    <ClInclude Include="Category.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Gradebook.h">
@@ -35,7 +35,7 @@
     <ClCompile Include="Assignment.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Catagory.cpp">
+    <ClCompile Include="Category.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Gradebook.cpp">

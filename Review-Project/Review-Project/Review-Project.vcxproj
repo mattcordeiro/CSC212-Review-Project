@@ -128,14 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Assignment.h" />
-    <ClInclude Include="Catagory.h" />
+    <ClInclude Include="Category.h" />
     <ClInclude Include="Gradebook.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="main2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assignment.cpp" />
-    <ClCompile Include="Catagory.cpp" />
+    <ClCompile Include="Category.cpp" />
     <ClCompile Include="Gradebook.cpp" />
     <ClCompile Include="main.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

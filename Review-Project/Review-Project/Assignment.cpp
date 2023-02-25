@@ -52,14 +52,14 @@ void Assignment::SetScore(int score) {
 	this->score = score;
 }
 
-float Assignment::CalculateGrade() {
-	return this->score / this->max_score;
+double Assignment::CalculateGrade() {
+	return (((double)this->score / (double)this->max_score)*100);
 }
 
 std::string Assignment::to_string() {
 	std::string str = "";
 	str += "Assignment: " + this->name + " Grade: " + std::to_string(this->score) + "/"
-		+ std::to_string(this->max_score) + " - " + std::to_string(CalculateGrade() * 100) + "%\n";
+		+ std::to_string(this->max_score) + " - " + std::to_string(CalculateGrade()) + "%\n";
 
 	return str;
 }
