@@ -18,10 +18,6 @@ std::string ConcatInputs(std::string input) {
     }
     return input;
 }
-float WeightedGrades(float grade, float weight) {
-    float weightedGrade = grade * weight;
-    return weightedGrade;
-}
 //Validate integer input
 int ValidIntInput() {
 	bool valid = false;
