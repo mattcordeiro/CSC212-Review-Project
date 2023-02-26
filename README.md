@@ -49,6 +49,13 @@ At run time, the user meets a menu with different gradebook options. These optio
  
  When the user chooses to create a new Gradebook, they are then prompted with different logical operations in regards to the gradebook such as Managing categories or assignments, and the option to output their grades. 
  
- In order for the Gradebooks to be read and displayed properly, they must be formatted like the example below in order to be read and written over.
+In order for the Gradebooks to be read and displayed properly, they must be formatted like the example below in order to be read and written over.
+
+ <img src="https://github.com/mattcordeiro/CSC212-Review-Project/blob/main/Planning-Materials/csc212%20input%20file.png" width=20% height=20%>  
+ 
+ Here we see that the first line should be the class title or the title of the gradebook you'd like to create. Then, we see different categories with assignments applicable to each category if any exist and the size of said category. 
+ 
+ For example, we see that Labs has 4 assignments within the category, and since all of the assignments are currently not graded except for the initial lab, the rest of the labs contain a 0 out of weight 20 for a score.
+
 
 ## Evidence
