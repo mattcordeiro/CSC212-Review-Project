@@ -45,6 +45,6 @@ double Gradebook::CalculateTotalGradePoints()
 //gradebook output string
 std::string Gradebook::to_string() {
 	std::string str = "";
-	str += this->name + "\n";
+	str += this->name + " gradebook\n";
 	return str;
 }

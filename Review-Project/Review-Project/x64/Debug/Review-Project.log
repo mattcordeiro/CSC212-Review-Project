@@ -1,7 +1,4 @@
-﻿  Category.cpp
-  Gradebook.cpp
-  main.cpp
-C:\Users\drjac\source\repos\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(106,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\drjac\source\repos\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(234,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
+﻿  main.cpp
+C:\Users\drjac\source\repos\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(102,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\drjac\source\repos\CSC212-Review-Project\Review-Project\Review-Project\main.cpp(231,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Review-Project.vcxproj -> C:\Users\drjac\source\repos\CSC212-Review-Project\Review-Project\x64\Debug\Review-Project.exe
