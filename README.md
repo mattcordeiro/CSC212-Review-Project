@@ -28,8 +28,7 @@ User runs program to imput a library of graded data and/or class data
                   else if only category
                     then only category totals and course overall
                   else
-                    only the course overall
-       
+                    only the course overall    
 ```
 <img src="https://github.com/mattcordeiro/CSC212-Review-Project/blob/main/Planning-Materials/reviewproject%20flow.jpg" width=50% height=50%>
 
@@ -46,6 +45,10 @@ At run time, the user meets a menu with different gradebook options. These optio
   2. Load Gradebook
   3. Import Gradebook
   4. Quit Virtual Gradebook
- Within each choice, the user is then prompted with various options. When the user chooses to create a new Gradebook, they are then prompted
+ Within each choice, the user is then prompted with various options. 
+ 
+ When the user chooses to create a new Gradebook, they are then prompted with different logical operations in regards to the gradebook such as Managing categories or assignments, and the option to output their grades. 
+ 
+ In order for the Gradebooks to be read and displayed properly, they must be formatted like the example below in order to be read and written over.
 
 ## Evidence
