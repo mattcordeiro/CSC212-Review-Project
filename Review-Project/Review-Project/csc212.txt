@@ -2,9 +2,9 @@ csc212
 Labs 0.000000
 4
 lab1 20 18
-Lab2 20 0
-Lab3 20 0
-lab4 20 0
+Lab2 20 20
+Lab3 20 20
+lab4 20 20
 Exams 0.000000
 1
-Final-Exam 100 0
+Final-Exam 100 85
