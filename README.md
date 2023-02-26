@@ -9,12 +9,36 @@ capabilities. For our end result, we are able to modify and output all deliverab
 
 ## Planning
 ```
-PSEUDOCODE WILL BE HERE
+User runs program to imput a library of graded data and/or class data
+    The user can then configure their gradebook to their liking to 
+    include a loaded gradebook (shown in the format below), importing,
+    or creating.
+        Once the Gradebook is created, Category, Individual, and Course
+        grades can be entered in
+        The user can toggle show grades.
+            The user can then select from course, individual, and category
+            if individual
+              then cout the individual grade and name
+            else if category
+              then return all grades from the category and category total
+            else
+              then course deliverables can be returned in 3 different ways
+                  if all grades
+                    then all grades within their respective categories and a course overall
+                  else if only category
+                    then only category totals and course overall
+                  else
+                    only the course overall
+       
 ```
 <img src="https://github.com/mattcordeiro/CSC212-Review-Project/blob/main/Planning-Materials/reviewproject%20flow.jpg" width=50% height=50%>
 
 ## Compilation Instructions
 To compile our program, the run and debug option within the end users IDE is sufficent to compile and execute the program. The user does not need to insert any command line arguments at the initial run time.
+
+In addition, the program can be compiled in the directory with:
+
+**"g++ -std=c++11 main.cpp Assignment.cpp Category.cpp Gradebook.cpp -o Gradebook && ./Gradebook"**
 
 ## Runtime Instructions
 At run time, the user meets a menu with different gradebook options. These options include...
