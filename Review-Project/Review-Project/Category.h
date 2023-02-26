@@ -22,6 +22,8 @@ public:
 	double GetWeight();
     //sets the weight of a category
 	void SetWeight(float weight);
+    //returns the weighted grade of an assignment
+    double CalculateWeightedGrade(Assignment assignment);
     //a vector of assignments to get an assignment within a category
 	std::vector<Assignment> GetAssignment();
     //setting an assignment at a given index

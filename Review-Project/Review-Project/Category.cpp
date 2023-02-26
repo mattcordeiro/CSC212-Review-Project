@@ -22,6 +22,9 @@ double Category::GetWeight() {
 void Category::SetWeight(float weight) {
 	this->weight = weight;
 }
+double Category::CalculateWeightedGrade(Assignment assignment){
+    return (assignment.CalculateGrade() * this->weight);
+}
 std::vector<Assignment> Category::GetAssignment() {
 
 	return this->assignments;
