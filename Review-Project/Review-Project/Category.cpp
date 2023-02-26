@@ -5,7 +5,7 @@ Category::Category(std::string name) {
 	this->name = name;
 	this->weight = 0;
 }
-Category::Category(std::string name, float weight) {
+Category::Category(std::string name, double weight) {
 	this->name = name;
 	this->weight = weight;
 }
@@ -19,7 +19,7 @@ std::string Category::GetName() {
 double Category::GetWeight() {
 	return this->weight;
 }
-void Category::SetWeight(float weight) {
+void Category::SetWeight(double weight) {
 	this->weight = weight;
 }
 double Category::CalculateWeightedGrade(Assignment assignment){
