@@ -103,6 +103,7 @@ Category EditCatagory(Category category) {
 	}
 	return category;
 }
+
 int ChooseCategory(Gradebook & a_gradebook) {
 	int input;
     //User has the option to choose the assignment with logic down below if there is a assignment in a_gradebook, if not there's no assignments available
@@ -289,14 +290,48 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 			break;
 
 
-		//Display grades - not finished/implemented
+		//Display grades
 		case 3:
-			for (int i = 0; i < a_gradebook.GetCategory().size(); i++) {
-				std::cout << "******************************\n" << a_gradebook.GetCategory()[i].to_string() << "******************************\n";
-				for (int j = 0; j < a_gradebook.GetCategory()[i].GetAssignment().size(); j++) {
-					std::cout << a_gradebook.GetCategory()[i].GetAssignment()[j].to_string();
+			std::cout << "Grade display options:\n1 - Detailed course overview\n2 - Categorical course overview\n3 - Course grade\n4 - Detailed category overview\n5 - Assignment grade\n6 - Back\n";
+			input = ValidIntInput();
+			switch (input) {
+			case 1:
+				std::cout << "************************************************************\n" << a_gradebook.to_string() << "************************************************************\n";
+				for (int i = 0; i < a_gradebook.GetCategory().size(); i++) {
+					std::cout << "************************************************************\n" << a_gradebook.GetCategory()[i].to_string() << "************************************************************\n";
+					for (int j = 0; j < a_gradebook.GetCategory()[i].GetAssignment().size(); j++) {
+						std::cout << a_gradebook.GetCategory()[i].GetAssignment()[j].to_string();
+					}
+					std::cout << "\n\n";
+				}
+				std::cout << "************************************************************\n************************************************************\nFinal grade is: " << a_gradebook.CalculateTotalGradePoints() << "\n************************************************************\n";
+				break;
+			case 2:
+				std::cout << "************************************************************\n" << a_gradebook.to_string() << "************************************************************\n";
+				for (int i = 0; i < a_gradebook.GetCategory().size(); i++) {
+					std::cout << "************************************************************\n" << a_gradebook.GetCategory()[i].to_string() << "************************************************************\n";
+					
+					std::cout << "\n\n";
+				}
+				std::cout << "************************************************************\n************************************************************\nFinal grade is: " << a_gradebook.CalculateTotalGradePoints() << "\n************************************************************\n";
+				break;
+			case 3:
+				std::cout << "************************************************************\n" << a_gradebook.to_string() << "************************************************************\n";
+				std::cout << "************************************************************\n************************************************************\nFinal grade is: " << a_gradebook.CalculateTotalGradePoints() << "\n************************************************************\n";
+				break;
+			case 4:
+				input = ChooseCategory(a_gradebook);
+				std::cout << "************************************************************\n" << a_gradebook.GetCategory()[input].to_string() << "************************************************************\n";
+				for (int j = 0; j < a_gradebook.GetCategory()[input].GetAssignment().size(); j++) {
+					std::cout << a_gradebook.GetCategory()[input].GetAssignment()[j].to_string();
 				}
 				std::cout << "\n\n";
+				break;
+			case 5:
+				input = ChooseCategory(a_gradebook);
+				input2 = ChooseAssignment(a_gradebook.GetCategory()[input]);
+				std::cout << "************************************************************\n" << a_gradebook.GetCategory()[input].GetAssignment()[input2].to_string() << "************************************************************\n";
+				break;
 			}
 			break;
 		//exit gradebook
@@ -312,6 +347,7 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 //builds gradebook from data file
 void LoadGradebook(Gradebook & a_gradebook, std::string load_file, std::vector<std::string> load_initializer) {
 	std::ifstream in_file;
+	std::ofstream out_file;
 	std::string gb_name;
 	std::string cat_name;
 	std::string ass_name;
@@ -320,6 +356,7 @@ void LoadGradebook(Gradebook & a_gradebook, std::string load_file, std::vector<s
 	int score;
 	int cat_count = 0; //used to track which catagory to add assignments to
 	float weight;
+	bool found = false;
 
 	in_file.open(load_file + ".txt");   //opens string name with the .txt extension
 	in_file >> gb_name;                    //takes in the gradebook name
@@ -344,6 +381,27 @@ void LoadGradebook(Gradebook & a_gradebook, std::string load_file, std::vector<s
 		}
 		cat_count++;
 	}
+	in_file.close();
+
+	//the following is used when LoadGradebook() is called during importing
+	// Checks if current gradebook exists in init_load.txt
+	for (int i = 0; i < load_initializer.size(); i++) {
+		if (load_initializer[i].compare(a_gradebook.GetName()) == 0) {
+			found = true;
+		}
+	}
+	// adds gradebook to init_load.txt if not found
+	if (!found) {
+		out_file.open("init_load.txt", std::ofstream::trunc);
+
+		for (int i = 0; i < load_initializer.size(); i++) {
+			out_file << load_initializer[i] + "\n";
+		}
+		out_file << a_gradebook.GetName();
+		out_file.close();
+	}
+
+
 	// passes gradebook to the manager after loading
 	ManageGradebook(a_gradebook, load_initializer);
 }
@@ -417,31 +475,28 @@ int main(int argc, char* argv[]) {
 			if (input > 0 && input < menu_count + 1 ) LoadGradebook(a_gradebook, load_initializer[input - 1], load_initializer);
 			break;
 
-
-			//import - TODO: Import gradebook from a formatted txt file - be sure to check for duplication in init_load.txt and adjust init_load.txt
-		case 3: {
-            //takes in a string input, pull in an externally created gradebook
-            // some starter code below to take in the import file logic
-            //should probably use some LoadGradebook functionality to complete
-
-//            std::cout << "Which Gradebook would you like to import?\n";
-//            std::fstream imported_gradebook;
-//            imported_gradebook.open("init_load.txt"); //open a file to perform read operation using file object
-//            if (imported_gradebook.is_open()){ //checking whether the file is open
-//                std::string tp;
-//                while(getline(imported_gradebook, tp)){ //read data from file object and put it into string.
-//                    std::cout << tp << "\n"; //print the data of the string
-//                }
-//
-//            }
+			//import gradebook
+		case 3:            
+			std::cout << "Which Gradebook would you like to import(enter file name without \'.txt\')?\n";
+			std::cin.ignore();
+			std::getline(std::cin, s_input);
+			s_input = ConcatInputs(s_input);
+			in_file.open((s_input + ".txt"));
+			if (!in_file.fail()) {
+				in_file.close();
+				LoadGradebook(a_gradebook, s_input, load_initializer);
+			}
+			else {
+				in_file.close();
+				std::cout << "Invalid File Name\n";
+			}
             break;
-        }
-
+        
 			//breaks loop and exits app
-		case 4: {
+		case 4: 
             quit = true;
             break;
-        }
+        
 		}
 	}
 }
