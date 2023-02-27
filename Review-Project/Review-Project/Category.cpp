@@ -46,9 +46,11 @@ double Category::CalculateCategoryGradePoints()
 {
 	int total_max_score=0;
 	int total_score=0;
-	for (int i = 0; i < this->assignments.size(); i++) {		
-		total_max_score += assignments[i].GetMaxScore();
-		total_score += assignments[i].GetScore();
+	for (int i = 0; i < this->assignments.size(); i++) {	
+		if (assignments[i].GetScore() >= 0) {
+			total_max_score += assignments[i].GetMaxScore();
+			total_score += assignments[i].GetScore();
+		}
 	}
 	return (((double)total_score / (double)total_max_score) * 100);
 }
