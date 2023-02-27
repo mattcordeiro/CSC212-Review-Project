@@ -190,6 +190,7 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 	int max_score;
 	std::string s_input;
 	bool back = false;
+	bool weighted = true;
 	double f_input;
 
 	//Enter gradebook management menu
@@ -292,8 +293,18 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 
 		//Display grades
 		case 3:
+			weighted = true;
+
 			std::cout << "Grade display options:\n1 - Detailed course overview\n2 - Categorical course overview\n3 - Course grade\n4 - Detailed category overview\n5 - Assignment grade\n6 - Back\n";
 			input = ValidIntInput();
+
+			for (int i = 0; i < a_gradebook.GetCategory().size(); i++) {
+				if (!(a_gradebook.GetCategory()[i].GetWeight() > 0 && a_gradebook.GetCategory()[i].GetWeight() < 1)) {
+					weighted = false;
+					continue;
+				}
+			}
+
 			switch (input) {
 			case 1:
 				std::cout << "************************************************************\n" << a_gradebook.to_string() << "************************************************************\n";
@@ -304,7 +315,7 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 					}
 					std::cout << "\n\n";
 				}
-				std::cout << "************************************************************\n************************************************************\nFinal grade is: " << a_gradebook.CalculateTotalGradePoints() << "\n************************************************************\n";
+				std::cout << "************************************************************\n************************************************************\nFinal grade is: " << a_gradebook.CalculateTotalGradePoints(weighted) << "\n************************************************************\n";
 				break;
 			case 2:
 				std::cout << "************************************************************\n" << a_gradebook.to_string() << "************************************************************\n";
@@ -313,11 +324,11 @@ void ManageGradebook(Gradebook & a_gradebook, std::vector<std::string> load_init
 					
 					std::cout << "\n\n";
 				}
-				std::cout << "************************************************************\n************************************************************\nFinal grade is: " << a_gradebook.CalculateTotalGradePoints() << "\n************************************************************\n";
+				std::cout << "************************************************************\n************************************************************\nFinal grade is: " << a_gradebook.CalculateTotalGradePoints(weighted) << "\n************************************************************\n";
 				break;
 			case 3:
 				std::cout << "************************************************************\n" << a_gradebook.to_string() << "************************************************************\n";
-				std::cout << "************************************************************\n************************************************************\nFinal grade is: " << a_gradebook.CalculateTotalGradePoints() << "\n************************************************************\n";
+				std::cout << "************************************************************\n************************************************************\nFinal grade is: " << a_gradebook.CalculateTotalGradePoints(weighted) << "\n************************************************************\n";
 				break;
 			case 4:
 				input = ChooseCategory(a_gradebook);
