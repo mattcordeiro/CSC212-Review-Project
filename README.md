@@ -30,12 +30,14 @@ User runs program to imput a library of graded data and/or class data
                   else
                     only the course overall    
 ```
-<img src="https://github.com/mattcordeiro/CSC212-Review-Project/blob/main/Planning-Materials/reviewproject%20flow.jpg" width=50% height=50%>
+<img src="https://github.com/mattcordeiro/CSC212-Review-Project/blob/main/Planning-Materials/reviewproject%20flow.jpg" width=40% height=40%><img src="https://github.com/mattcordeiro/CSC212-Review-Project/blob/main/Planning-Materials/Screen%20Shot%202023-02-26%20at%208.30.53%20PM.jpeg" width=60% height=60%>
 
 ## Compilation Instructions
-To compile our program, the run and debug option within the end users IDE is sufficent to compile and execute the program. The user does not need to insert any command line arguments at the initial run time.
+To compile our program, the run and debug option within the end users IDE is sufficent to compile and execute the program. The user does not need to insert any command line arguments at the initial run time, but there is an option of using the filename for an empty gradebook such as: 
 
-In addition, the program can be compiled in the directory with:
+**./Gradebook mth180.txt** 
+
+to load another dataset within the same directory. In addition, the program can be compiled in the directory with:
 
 **"g++ -std=c++11 main.cpp Assignment.cpp Category.cpp Gradebook.cpp -o Gradebook && ./Gradebook"**
 
@@ -59,3 +61,14 @@ In order for the Gradebooks to be read and displayed properly, they must be form
 
 
 ## Evidence
+
+Here we see the output for an Individual assignment within one of Matt's Gradebooks for ART-251:
+
+<img src="https://github.com/mattcordeiro/CSC212-Review-Project/blob/main/Planning-Materials/Screen%20Shot%202023-02-26%20at%208.01.31%20PM%20Small.jpeg" width=25% height=25%>
+
+The following was created as an output of our Gradebook as it creates a Gradebook for the user with the following outputs to present each person their own 
+dataset. In addition, we can also see the output of Daniel's MTH180 total course grade:
+
+<img src="https://github.com/mattcordeiro/CSC212-Review-Project/blob/main/Planning-Materials/Screen%20Shot%202023-02-26%20at%207.55.02%20PM.png" width=45%
+height=45%>
+
