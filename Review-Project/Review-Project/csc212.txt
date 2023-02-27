@@ -1,5 +1,5 @@
 csc212
-Labs 0.000000
+Labs 0.200000
 6
 lab1 20 18
 Lab2 20 20
@@ -7,6 +7,14 @@ Lab3 20 20
 lab4 20 20
 lab5 20 -1
 lab6 20 -1
-Exams 0.000000
+Assignments 0.200000
+2
+A2 50 50
+A3 50 -1
+Projects 0.500000
+2
+Review-Project 150 -1
+Term-Project 350 -1
+Exams 0.100000
 1
-Final-Exam 100 85
+Final-Exam 100 -1
