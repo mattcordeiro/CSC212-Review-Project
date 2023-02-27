@@ -57,8 +57,8 @@ In order for the Gradebooks to be read and displayed properly, they must be form
  
  Here we see that the first line should be the class title or the title of the gradebook you'd like to create. Then, we see different categories with assignments applicable to each category if any exist and the size of said category. 
  
- For example, we see that Labs has 4 assignments within the category, and since all of the assignments are currently not graded except for the initial lab, the rest of the labs contain a 0 out of weight 20 for a score.
-
+ For example, we see that Labs has 4 assignments within the category, and since all of the assignments are currently not graded except for the initial lab, the rest of the labs contain a 0 out of weight 20 for a score. It is important to note that the weight of the grades can be in either decimal format. 
+(ex: 50%/50 points = .5 or 50 points.)
 
 ## Evidence
 
