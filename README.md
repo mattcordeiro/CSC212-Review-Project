@@ -9,7 +9,7 @@ capabilities. For our end result, we are able to modify and output all deliverab
 
 ## Planning
 ```
-User runs program to imput a library of graded data and/or class data
+User runs program to input a library of graded data and/or class data
     The user can then configure their gradebook to their liking to 
     include a loaded gradebook (shown in the format below), importing,
     or creating.
@@ -35,7 +35,7 @@ User runs program to imput a library of graded data and/or class data
 ## Compilation Instructions
 To compile our program, the run and debug option within the end users IDE is sufficent to compile and execute the program. The user does not need to insert any command line arguments at the initial run time, but there is an option of using the filename for an empty gradebook such as: 
 
-**./Gradebook mth180.txt** 
+**./Gradebook sample-cla.txt** 
 
 to load another dataset within the same directory. In addition, the program can be compiled in the directory with:
 
