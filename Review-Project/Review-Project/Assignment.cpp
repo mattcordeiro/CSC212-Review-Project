@@ -3,7 +3,7 @@
 Assignment::Assignment() {
 	this->name = "";
 	this->max_score = 0;
-	this->score = 0;
+	this->score = -1;
 }
 
 Assignment::Assignment(std::string name) {
@@ -53,12 +53,16 @@ void Assignment::SetScore(int score) {
 }
 
 double Assignment::CalculateGrade() {
-	return (((double)this->score / (double)this->max_score)*100);
+	if(this->score >= 0) return (((double)this->score / (double)this->max_score)*100);
+	else return ((0.0 / (double)this->max_score) * 100);
 }
 
 std::string Assignment::to_string() {
 	std::string str = "";
-	str += "Assignment: " + this->name + " Grade: " + std::to_string(this->score) + "/"
+	std::string s_score;
+	if (this->score < 0) s_score = "ungraded";
+	else s_score = std::to_string(this->score);
+	str += "Assignment: " + this->name + " Grade: " + s_score + "/"
 		+ std::to_string(this->max_score) + " - " + std::to_string(CalculateGrade()) + "%\n";
 
 	return str;

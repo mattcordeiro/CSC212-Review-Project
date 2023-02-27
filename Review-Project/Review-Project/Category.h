@@ -13,7 +13,7 @@ public:
     //constructor
 	Category(std::string name);
     //constructor to return the name and weight of a category
-	Category(std::string name, float weight);
+	Category(std::string name, double weight);
     //sets the name of the category
 	void SetName(std::string name);
     //returns the name of a category
@@ -21,7 +21,7 @@ public:
     //gets weight of a category
 	double GetWeight();
     //sets the weight of a category
-	void SetWeight(float weight);
+	void SetWeight(double weight);
     //returns the weighted grade of an assignment
     double CalculateWeightedGrade(Assignment assignment);
     //a vector of assignments to get an assignment within a category

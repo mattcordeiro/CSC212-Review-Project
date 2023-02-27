@@ -35,8 +35,10 @@ double Gradebook::CalculateTotalGradePoints()
 
 	for (int i = 0; i < catagories.size(); i++) {
 		for (int j = 0; j < catagories[i].GetAssignment().size(); j++) {
-			total_max_score += catagories[i].GetAssignment()[j].GetMaxScore();
-			total_score += catagories[i].GetAssignment()[j].GetScore();
+			if (catagories[i].GetAssignment()[j].GetScore() >= 0) {
+				total_max_score += catagories[i].GetAssignment()[j].GetMaxScore();
+				total_score += catagories[i].GetAssignment()[j].GetScore();
+			}
 		}
 	}
 	return (((double)total_score / (double)total_max_score) * 100);

@@ -5,7 +5,7 @@ Category::Category(std::string name) {
 	this->name = name;
 	this->weight = 0;
 }
-Category::Category(std::string name, float weight) {
+Category::Category(std::string name, double weight) {
 	this->name = name;
 	this->weight = weight;
 }
@@ -19,7 +19,7 @@ std::string Category::GetName() {
 double Category::GetWeight() {
 	return this->weight;
 }
-void Category::SetWeight(float weight) {
+void Category::SetWeight(double weight) {
 	this->weight = weight;
 }
 double Category::CalculateWeightedGrade(Assignment assignment){
@@ -46,9 +46,11 @@ double Category::CalculateCategoryGradePoints()
 {
 	int total_max_score=0;
 	int total_score=0;
-	for (int i = 0; i < this->assignments.size(); i++) {		
-		total_max_score += assignments[i].GetMaxScore();
-		total_score += assignments[i].GetScore();
+	for (int i = 0; i < this->assignments.size(); i++) {	
+		if (assignments[i].GetScore() >= 0) {
+			total_max_score += assignments[i].GetMaxScore();
+			total_score += assignments[i].GetScore();
+		}
 	}
 	return (((double)total_score / (double)total_max_score) * 100);
 }
