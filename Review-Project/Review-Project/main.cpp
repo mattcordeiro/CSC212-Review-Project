@@ -175,7 +175,7 @@ Category DeleteAssignment(int idx, Category category) {
 	return category;
 }
 
-Category BuildCatagoryAssignment(Category category, std::string ass_name, int max_score, int score = 0) {
+Category BuildCatagoryAssignment(Category category, std::string ass_name, int max_score, int score = -1) {
     //this catagory method takes in category, assignment_name, the max_score, and the inital score
 	Assignment assignment(ass_name, max_score, score);
     //adds assignment to the catagory

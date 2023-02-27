@@ -9,13 +9,13 @@ Assignment::Assignment() {
 Assignment::Assignment(std::string name) {
 	this->name = name;
 	this->max_score = 0;
-	this->score = 0;
+	this->score = -1;
 }
 
 Assignment::Assignment(std::string name, int max_score) {
 	this->name = name;
 	this->max_score = max_score;
-	this->score = 0;
+	this->score = -1;
 }
 
 Assignment::Assignment(std::string name, int max_score, int score) {
