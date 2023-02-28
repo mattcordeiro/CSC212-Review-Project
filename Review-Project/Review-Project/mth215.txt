@@ -1,0 +1,20 @@
+mth215
+Quizes 0.000000
+11
+syllabus-quiz 20 20
+quiz-1 20 18
+quiz-2 20 20
+quiz-3 20 18
+quiz-4 20 20
+quiz-5 20 20
+quiz-6 20 -1
+quiz-7 20 -1
+quiz-8 20 -1
+quiz-9 20 -1
+quiz-10 20 -1
+Exams 0.000000
+4
+Exam-1 100 100
+Exam-2 100 -1
+Exam-3 100 -1
+Final-Exam 200 -1

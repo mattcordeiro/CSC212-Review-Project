@@ -1,10 +1,15 @@
 mth180
-Homework 0.000000
+Homework 0.150000
 4
-HW1 100 100
-HW2 100 90
-HW3 100 95
-HW4 100 88
-Exams 0.000000
+HW1 100 95
+HW2 100 85
+HW3 100 100
+HW4 100 90
+Exams 0.600000
+3
+Exam1 100 -1
+Exam2 100 -1
+Exam3 100 -1
+Final-exam 0.250000
 1
-Exam1 100 90
+Final-Exam 100 -1
